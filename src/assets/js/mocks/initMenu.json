@@ -1,0 +1,162 @@
+{
+  "code": "2000",
+  "message": "成功",
+  "test": "it is me!!",
+  "data": {
+    "menus": [
+      {
+
+        "children": [
+          {
+            "disabled": false,
+            "menuIcon": "",
+            "menuId": 3432876543456432000,
+            "menuName": "内置函数",
+            "menuPath": "functionManage",
+            "menuRemark": "我是权限备注",
+            "parentMenuId": 1032146087424770000
+          },
+          {
+            "disabled": false,
+            "menuIcon": "",
+            "menuId": 1032146280702492300,
+            "menuName": "项目配置",
+            "menuPath": "projectManage",
+            "menuRemark": "“我是备注”",
+            "parentMenuId": 1032146087424770000
+          },
+          {
+            "disabled": false,
+            "menuIcon": "",
+            "menuId": 1032146280702492700,
+            "menuName": "环境配置",
+            "menuPath": "environmentManage",
+            "menuRemark": "“我是备注”",
+            "parentMenuId": 1032146087424770000
+          },
+          {
+            "disabled": false,
+            "menuId": 34567650980909,
+            "menuName": "数据库配置",
+            "menuPath": "dbManage",
+            "menuRemark": "",
+            "parentMenuId": 1032146087424770000
+          }
+        ],
+        "disabled": false,
+        "menuIcon": "el-icon-setting",
+        "menuId": 1032146087424770000,
+        "menuName": "项目管理",
+        "menuPath": "a",
+        "menuRemark": "",
+        "parentMenuId": 0
+      },
+      {
+
+        "children": [
+        ],
+        "disabled": false,
+        "menuIcon": "el-icon-printer",
+        "menuId": 1032146087424770000,
+        "menuName": "接口测试",
+        "menuPath": "z",
+        "menuRemark": "",
+        "parentMenuId": 0
+      },
+      {
+
+        "children": [
+        ],
+        "disabled": false,
+        "menuIcon": "el-icon-mobile-phone",
+        "menuId": 1032146087424770000,
+        "menuName": "app自动化",
+        "menuPath": "a",
+        "menuRemark": "",
+        "parentMenuId": 0
+      },
+      {
+
+        "children": [
+        ],
+        "disabled": false,
+        "menuIcon": "el-icon-news",
+        "menuId": 1032146087424770000,
+        "menuName": "web自动化",
+        "menuPath": "a",
+        "menuRemark": "",
+        "parentMenuId": 0
+      },
+      {
+
+        "children": [
+          {
+            "disabled": false,
+            "menuIcon": "",
+            "menuId": 3432876543456432000,
+            "menuName": "数据构造",
+            "menuPath": "DataConstruction",
+            "menuRemark": "我是权限备注",
+            "parentMenuId": 1032146087424770000
+          }
+        ],
+        "disabled": false,
+        "menuIcon": "el-icon-tickets",
+        "menuId": 1032146087424770000,
+        "menuName": "测试工具",
+        "menuPath": "b",
+        "menuRemark": "",
+        "parentMenuId": 0
+      },
+      {
+        "children": [
+        ],
+        "disabled": false,
+        "menuIcon": "el-icon-info",
+        "menuId": 1032146087424770000,
+        "menuName": "资源管理",
+        "menuPath": "a",
+        "menuRemark": "",
+        "parentMenuId": 0
+      },
+      {
+        "children": [
+        ],
+        "disabled": false,
+        "menuIcon": "el-icon-view",
+        "menuId": 1032146087424770000,
+        "menuName": "监控管理",
+        "menuPath": "a",
+        "menuRemark": "",
+        "parentMenuId": 0
+      },
+      {
+        "children": [
+        ],
+        "disabled": false,
+        "menuIcon": "el-icon-more",
+        "menuId": 1032146087424770000,
+        "menuName": "发布管理",
+        "menuPath": "a",
+        "menuRemark": "",
+        "parentMenuId": 0
+      },
+      {
+
+        "children": [
+        ],
+        "disabled": false,
+        "menuIcon": "el-icon-bell",
+        "menuId": 1032146087424770000,
+        "menuName": "定时任务",
+        "menuPath": "a",
+        "menuRemark": "",
+        "parentMenuId": 0
+      }
+    ],
+    "userInfo": {
+      "userAccount": "admin",
+      "userName": "超级管理员"
+    }
+  }
+}
