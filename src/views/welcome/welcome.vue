@@ -1,5 +1,10 @@
 <template>
-    <div class="welcomePage">
-        <p>欢迎来到{{$brandInfo.brandName}}管理后台！</p>
+    <div class="codingPage">
+        <img class="codingImg" src="@/assets/coding.png">
+        <p class="codingWords">~ ~ 测试粑粑正在抓紧开发 ~ ~</p>
     </div>
 </template>
+
+<style lang="less" scoped>
+    @import './coding.less';
+</style>

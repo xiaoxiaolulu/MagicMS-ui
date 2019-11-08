@@ -41,6 +41,11 @@ const routes = [
     component: () => import('../views/GroupCreate.vue')
   },
   {
+    path: '*',
+    name: '404',
+    component: () => import(/* webpackChunkName: "about" */ '../views/404')
+  },
+  {
     path: '/layout',
     name: 'layout',
     component: () => import(/* webpackChunkName: "about" */ '../views/layout'),

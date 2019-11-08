@@ -4,14 +4,32 @@
             <el-button size="small" type="success" @click="addMenu">添加项目</el-button>
         </div>
         <el-table
-                :data="tableData.slice((queryParams.currentPage-1)*20,queryParams.currentPage*20)"
+                :data="tableData.slice((queryParams.currentPage-1)*20,queryParams.currentPage*20)" :row-class-name="tableRowClassName"
                 v-loading="tableLoading"
             element-loading-text="拼命加载中"
             height="100%"
             border>
+            <el-table-column type="expand" >
+                <template slot-scope="props">
+                    <el-table border :data="props.row.env" :row-class-name="tableRowClassName">
+                        <el-table-column prop="name" label="测试环境"></el-table-column>
+                        <el-table-column prop="host_address" label="测试地址"></el-table-column>
+                    </el-table>
+                    <el-table border :data="props.row.children" style="margin-top: 10px" :row-class-name="tableRowClassName">
+                        <el-table-column prop="db_setting.name" label="数据库"></el-table-column>
+                        <el-table-column prop="db_setting.db_type" label="类型"></el-table-column>
+                        <el-table-column prop="db_setting.db_user" label="账号"></el-table-column>
+                        <el-table-column prop="db_setting.db_password" label="密码"></el-table-column>
+                        <el-table-column prop="db_setting.db_host" label="地址"></el-table-column>
+                        <el-table-column prop="db_setting.db_port" label="端口"></el-table-column>
+                    </el-table>
+                </template>
+            </el-table-column>
             <el-table-column type="index" width="50" label="序号"></el-table-column>
             <el-table-column prop="name" min-width="150" label="项目名称"></el-table-column>
             <el-table-column prop="creator.nick_name" min-width="150" label="创建人"></el-table-column>
+            <el-table-column prop="env.name" min-width="150" label="环境"></el-table-column>
+            <el-table-column prop="db_setting.name" min-width="150" label="数据库"></el-table-column>
             <el-table-column prop="desc" min-width="150" label="项目描述"></el-table-column>
             <el-table-column prop="add_time" min-width="150" label="创建时间"></el-table-column>
             <el-table-column label="操作" min-width="150">
@@ -53,7 +71,7 @@ export default {
             rowData: null,
             total: null,
             tableLoading: false,
-            projectList: []
+            projectList: [],
         }
     },
     components: {
@@ -110,6 +128,13 @@ export default {
               })
           }).catch(_ => {})
         },
+        tableRowClassName({ row, rowIndex }) {
+            if (row.disabled) {
+                return 'disabled-row'
+            } else {
+                return ''
+            }
+        }
     }
 }
 </script>
