@@ -7,6 +7,14 @@
             <el-form-item label="项目名称">
                 <el-input v-model="formData.name"></el-input>
             </el-form-item>
+            <el-form-item label="选择环境">
+                <role-select
+                        v-model="formData.id"
+                        name="id"
+                        data-vv-as="环境"
+                        v-validate="'required'">
+                </role-select>
+            </el-form-item>
             <el-form-item label="项目描述">
                 <el-input v-model="formData.desc"></el-input>
             </el-form-item>
@@ -20,6 +28,7 @@
 
 <script>
     import {updateProject} from "../../../api/api";
+    import roleSelect from '@/components/roleSelect'
 
     export default {
         props: {
@@ -49,6 +58,7 @@
             return {
                 formData: {
                     name: '',
+                    id: '',
                     desc: ''
                 },
                 resetRules: {
@@ -74,6 +84,11 @@
                 this.$emit('input', val)
             }
         },
+
+        components: {
+            roleSelect
+        },
+
         methods: {
             submitForm (formName) {
                 this.$refs[formName].validate((valid) => {
@@ -81,6 +96,7 @@
                         updateProject({
                             project_id: this.$parent.rowData.id,
                             name: this.formData.name,
+                            env: this.formData.id,
                             desc: this.formData.desc,
                         }).then((response) => {
                             console.log(response.data);

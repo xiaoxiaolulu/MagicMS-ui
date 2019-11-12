@@ -57,6 +57,7 @@
             };
             return {
                 formData: {
+                    id: '',
                     name: '',
                     desc: ''
                 },
@@ -94,6 +95,7 @@
                     if (valid) {
                         createProject({
                             name: this.formData.name,
+                            env: this.formData.id,
                             desc: this.formData.desc,
                         }).then((response) => {
                             console.log(response.data);

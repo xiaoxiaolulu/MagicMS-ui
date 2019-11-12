@@ -9,18 +9,11 @@
             element-loading-text="拼命加载中"
             height="100%"
             border>
-            <el-table-column type="expand" >
-                <template slot-scope="props">
-                    <el-table border :data="props.row.env" :row-class-name="tableRowClassName">
-                        <el-table-column prop="name" label="测试环境"></el-table-column>
-                        <el-table-column prop="host_address" label="测试地址"></el-table-column>
-                    </el-table>
-                </template>
-            </el-table-column>
             <el-table-column type="index" width="50" label="序号"></el-table-column>
             <el-table-column prop="name" min-width="150" label="项目名称"></el-table-column>
             <el-table-column prop="creator.nick_name" min-width="150" label="创建人"></el-table-column>
-            <el-table-column prop="env.name" min-width="150" label="环境"></el-table-column>
+            <el-table-column prop="env.name" min-width="150" label="环境名"></el-table-column>
+            <el-table-column prop="env.host_address" min-width="150" label="环境地址"></el-table-column>
             <el-table-column prop="desc" min-width="150" label="项目描述"></el-table-column>
             <el-table-column prop="add_time" min-width="150" label="创建时间"></el-table-column>
             <el-table-column label="操作" min-width="150">
