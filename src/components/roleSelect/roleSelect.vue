@@ -1,14 +1,16 @@
 <template>
     <el-select v-model="currentValue" v-loading="loading" element-loading-spinner="el-icon-loading" clearable filterable>
         <template v-if="roles">
-            <el-option v-for="item in roles" :key="item.roleId" :label="item.roleName" :value="item.roleId">
-                {{ item.roleName }}
+            <el-option v-for="item in roles" :key="item.id" :label="item.name" :value="item.id">
+                {{ item.name }}
             </el-option>
         </template>
     </el-select>
 </template>
 
 <script>
+import {getTestEnvironmentList} from "../../api/api";
+
 export default {
     props: {
         value: {
@@ -33,15 +35,16 @@ export default {
     methods: {
         queryRoles() {
             this.loading = true;
-            this.$apis.queryAllSysRoleName().then((res) => {
+            getTestEnvironmentList({ params: { name: this.name} }).then((res) => {
                 this.loading = false;
-                this.roles = res.data
+                this.roles = res.data.data;
+                console.log(res.data.data)
             }).catch((error) => {
                 this.loading = false;
                 this.$message({
                     showClose: true,
                     type: 'error',
-                    message: error.message
+                    message: error.msg
                 })
             })
         }
