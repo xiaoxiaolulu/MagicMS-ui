@@ -28,12 +28,12 @@ const routes = [
   {
     path: '/login',
     name: 'login',
-    component: () => import('../views/Login.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/login')
   },
   {
     path: '/register',
     name: 'register',
-    component: () => import('../views/Register.vue')
+    component: () => import('../views/register/register.vue')
   },
   {
     path: '/group/create',

@@ -29,9 +29,9 @@
 
 <script>
     // import { mapGetters } from 'vuex';
-    import {loginUser} from "../api/api";
-    import { isEmail } from '../utils/validate';
-    import cookie from '../vuex/cookie'
+    import {loginUser} from "../../api/api";
+    import { isEmail } from '../../utils/validate';
+    import cookie from '../../vuex/cookie'
     import md5 from 'blueimp-md5';
     // import { getQueryObject } from 'utils';
 
@@ -169,7 +169,7 @@
 </script>
 
 <style rel="stylesheet/scss" lang="scss">
-    @import "../assets/css/mixin.scss";
+    @import "../../assets/css/mixin";
     .tips{
         font-size: 14px;
         color: #fff;
@@ -180,7 +180,7 @@
         height: 100vh;
         /*background-color: #2d3a4b;*/
 
-        background: url('../assets/img/bg_sky.jpg') no-repeat;
+        background: url('../../assets/img/bg_sky.jpg') no-repeat;
         background-size: cover;
 
         input:-webkit-autofill {

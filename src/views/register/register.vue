@@ -42,8 +42,8 @@
 </template>
 
 <script>
-    import { getVerifyCode, registUser } from '../api/api'
-    import { isEmail } from '../utils/validate';
+    import { getVerifyCode, registUser } from '../../api/api'
+    import { isEmail } from '../../utils/validate';
     // import { restPWD } from 'api/login';
 
     export default {
@@ -157,7 +157,7 @@
 </script>
 
 <style rel="stylesheet/scss" lang="scss">
-    @import "../assets/css/mixin.scss";
+    @import "../../assets/css/mixin";
 
     .reset-container {
         input:-webkit-autofill {
