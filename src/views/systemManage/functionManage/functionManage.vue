@@ -99,7 +99,7 @@
             },
             deleteFunctionData(row){
                 this.$confirm(`确认删除${row.id}?`).then(_ => {
-                    deleteFunction({db_id: row.id}).then((response) => {
+                    deleteFunction({function_id: row.id}).then((response) => {
                         console.log(response.data.code);
                         console.log(response.data.msg);
                         if(response.data.code === 1){

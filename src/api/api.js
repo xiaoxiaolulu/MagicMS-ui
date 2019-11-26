@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-let host = 'http://127.0.0.1:8082';
+let host = 'http://127.0.0.1:8084';
 
 // 验证码
 export const getVerifyCode = params => { return axios.post(`${host}/code/`, params) };
