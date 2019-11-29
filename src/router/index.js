@@ -118,6 +118,15 @@ const routes = [
         title: '数据库配置'
       }
     }, {
+      path: '/interfacesManage',
+      name: 'interfacesManage',
+      component: resolve => require(['@/views/interfacesTest/interfacesManage'], resolve),
+      meta: {
+        preTitle: '接口测试',
+        title: '接口管理'
+      }
+    },
+      {
       path: '/DataConstruction',
       name: 'DataConstruction',
       component: resolve => require(['@/views/testTools/DataConstruction'], resolve),

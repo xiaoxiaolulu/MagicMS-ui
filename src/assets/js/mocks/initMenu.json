@@ -54,6 +54,13 @@
       {
 
         "children": [
+          {
+            "disabled": false,
+            "menuId": 1042980918683979800,
+            "menuName": "接口配置",
+            "menuPath": "interfacesManage",
+            "parentMenuId": 1032146087424770000
+          }
         ],
         "disabled": false,
         "menuIcon": "el-icon-printer",
