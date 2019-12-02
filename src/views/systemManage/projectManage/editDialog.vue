@@ -28,7 +28,7 @@
 
 <script>
     import {updateProject} from "../../../api/api";
-    import roleSelect from '@/components/roleSelect'
+    import roleSelect from '@/components/roleSelectEnv'
 
     export default {
         props: {

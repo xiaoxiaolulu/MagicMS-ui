@@ -70,3 +70,5 @@ export const createFunction = params => {return axios.post(`${host}/functions/`,
 // 编辑内置函数
 export const updateFunction = params => {return axios.patch(`${host}/functions/${params.function_id}/`, params)};
 
+// 接口调试
+export const apiDebug = params => {return axios.post(`${host}/interfaces_debug/`, params)};

@@ -2,7 +2,13 @@
     <el-dialog title="Workspace" :visible.sync="addDialogVisible" center class="abow_dialog">
         <el-form autoComplete="on" :model="formData" :rules="resetRules" ref="formData">
             <div style="border: 1px solid #e6e6e6;margin-bottom: 10px;padding:15px;padding-bottom: 0px">
-                <el-row :gutter="10">
+                <el-row :gutter="20">
+                    <el-col :span="3">
+                        <el-form-item>
+                            <role-select v-model="formData.id" name="id" data-vv-as="项目" v-validate="'required'">
+                            </role-select>
+                        </el-form-item>
+                    </el-col>
                     <el-col :span="3">
                         <el-form-item>
                             <el-select v-model="formData.request4" placeholder="请求方式" @change="checkRequest" value="">
@@ -10,20 +16,16 @@
                             </el-select>
                         </el-form-item>
                     </el-col>
-                    <el-col :span="3">
-                        <el-form-item>
-                            <el-select v-model="formData.Http4" placeholder="HTTP协议" value="">
-                                <el-option v-for="(item,index) in Http" :key="index+''" :label="item.label" :value="item.value"></el-option>
-                            </el-select>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span='16'>
+                    <el-col :span='15'>
                         <el-form-item prop="addr">
-                            <el-input v-model.trim="formData.addr" placeholder="地址" auto-complete=""></el-input>
+                            <el-row :gutter="2">
+                                <el-col :span="22"><el-input v-model.trim="formData.addr" placeholder="地址" auto-complete=""></el-input></el-col>
+                                <el-col :span="2"><el-button class="el-icon-refresh-left" @click="Refresh" :disabled="disabled"></el-button></el-col>
+                            </el-row>
                         </el-form-item>
                     </el-col>
                     <el-col :span='2'>
-                        <el-button type="primary" @click="fastTest" :loading="loadingSend">发送</el-button>
+                        <el-button type="primary" @click="fastTest('formData')" :loading="loadingSend">发送</el-button>
                     </el-col>
                 </el-row>
             </div>
@@ -68,7 +70,7 @@
                                 <el-col v-show="request3" :span="16"><el-checkbox v-model="radioType" label="3" v-show="ParameterType">表单转源数据</el-checkbox></el-col>
                             </el-row>
                         </div>
-                        <el-table ref="multipleParameterTable" :data="formData.parameter" highlight-current-row  @selection-change="selsChangeParameter">
+                        <el-table ref="multipleParameterTable" :data="formData.parameter" highlight-current-row :class="ParameterType? 'parameter-a': 'parameter-b'" @selection-change="selsChangeParameter">
                             <el-table-column type="selection" min-width="5%" label="头部">
                             </el-table-column>
                             <el-table-column prop="name" label="参数名" min-width="20%" sortable>
@@ -94,7 +96,7 @@
                             <el-table-column label="" min-width="18%"></el-table-column>
                         </el-table>
                         <template>
-                            <el-input type="textarea" :rows="5" placeholder="请输入内容" v-model.trim="formData.parameterRaw"></el-input>
+                            <el-input :class="ParameterType? 'parameter-b': 'parameter-a'" type="textarea" :rows="5" placeholder="请输入内容" v-model.trim="formData.parameterRaw"></el-input>
                         </template>
                     </el-collapse-item>
                 </el-collapse>
@@ -104,7 +106,8 @@
 </template>
 
 <script>
-    import {createDbSetting} from "../../../api/api";
+    import {apiDebug} from "../../../api/api";
+    import roleSelect from '@/components/roleSelectProject'
 
     export default {
         props: {
@@ -123,8 +126,6 @@
                     {value: 'put', label: 'PUT'},
                     {value: 'delete', label: 'DELETE'}],
                 request3: true,
-                Http: [{value: 'http', label: 'HTTP'},
-                    {value: 'https', label: 'HTTPS'}],
                 loadingSend: false,
                 activeNames: ['1', '2', '3', '4'],
                 head: [{name: "", value: ""},
@@ -166,13 +167,12 @@
                 ParameterType: true,
                 parameters: "",
                 formData: {
+                    id: "",
                     request4: 'POST',
-                    Http4: 'HTTP',
                     addr: '',
                     head: [{name: "", value: ""},
                         {name: "", value: ""}],
-                    parameter: [{name: "", value: "", required:"", restrict: "", description: ""},
-                        {name: "", value: "", required:"", restrict: "", description: ""}],
+                    parameter: [{name: "", value: "", required:"", restrict: "", description: ""}],
                     parameterRaw: "",
                 },
                 resetRules: {
@@ -180,9 +180,15 @@
                 loading: false,
                 title: '',
                 addDialogVisible: false,
-                activeName: 'second'
+                activeName: 'second',
+                disabled: false
             }
         },
+
+        components: {
+            roleSelect
+        },
+
         watch: {
             value(val) {
                 this.addDialogVisible = val;
@@ -191,8 +197,14 @@
             },
             editDialogVisible(val) {
                 this.$emit('input', val)
-            }
+            },
+
+            radio() {
+                this.changeParameterType()
+            },
+
         },
+
         methods: {
             handleClick(tab, event) {
                 console.log(tab, event);
@@ -201,10 +213,6 @@
             checkRequest(){
                 let request = this.formData.request4;
                 this.request3 = !(request === "GET" || request === "DELETE");
-            },
-
-            fastTest() {
-                console.log(this.formData.head)
             },
 
             handleChange(val) {
@@ -234,6 +242,7 @@
             },
 
             delParameter(index) {
+                console.log("我就测试一下" + ":" + index);
                 if (this.formData.parameter.length !== 1) {
                     this.formData.parameter.splice(index, 1)
                 }
@@ -252,36 +261,104 @@
                 this.toggleParameterSelection(rows)
             },
 
-            submitForm (formName) {
+            changeParameterType() {
+                if (this.radio === 'form-data') {
+                    this.ParameterType = !this.ParameterType
+                } else {
+                    this.ParameterType = !this.ParameterType
+                }
+            },
+
+            fastTest(formName) {
+                // 请求路由
+                let _route = this.formData.addr.indexOf('?') === -1 ? this.formData.addr : this.formData.addr.split('?')[0];
+
+                // 请求头部
+                let headers = {};
+                for (let i = 0; i < this.formData.head.length; i++) {
+                    var a = this.formData.head[i]["name"];
+                    if (a) {
+                        headers[a] = this.formData.head[i]["value"]
+                    }
+                }
+
+                // 请求参数
+                let _type = this.radio;
+                let _parameter = this.formData.request4 === 'get' ? "": {};
+
+                if (this.formData.request4 === 'get'){
+                    let arrParams= [];
+                    for(let i=0; i < this.formData.parameter.length; i++){
+                        try{
+                            var a = this.formData.parameter[i]['name'];
+                            var b = this.formData.parameter[i]['value'];
+                            arrParams.push(a + '=' + b);
+                        }catch (e) {
+                            console.log(e)
+                        }
+                    }
+                    var getParams = (arrParams).join("&");
+                    _parameter += getParams;
+
+                } else {
+                    for (let i = 0; i < this.formData.parameter.length; i++) {
+                        var a = this.formData.parameter[i]["name"];
+                        if (a) {
+                            _parameter[a] = this.formData.parameter[i]["value"];
+                        }
+                    }
+                    _parameter = JSON.stringify(_parameter)
+                }
+
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        createDbSetting({
-                            name: this.formData.name,
-                            db_type: this.formData.type,
-                            db_user: this.formData.user,
-                            db_password: this.formData.password,
-                            db_host: this.formData.host,
-                            db_port: this.formData.port,
-                            desc: this.formData.desc,
+                        apiDebug({
+                            url: _route,
+                            method: this.formData.request4,
+                            headers: JSON.stringify(headers),
+                            params: _parameter,
+                            project: this.formData.id
                         }).then((response) => {
                             console.log(response.data);
-                            this.addDialogVisible = false;
-                            this.$parent.queryList()
                         }).catch((err) => {
                             if (err.response.status === 400) {
                                 if (err.response.data.code) {
                                     this.$message({ message: err.response.data.code, type: 'error' })
-                                } else if (err.response.data.email) {
-                                    this.$message({ message: err.response.data.email, type: 'error' })
                                 }
                             }
                         })
-                    } else {
-                        console.log('error submit!!');
-                        return false
                     }
                 })
+
             },
+
+            Refresh () {
+                if (this.formData.addr.indexOf('?') !== -1){
+                    this.disabled = true;
+                    delete this.formData.parameter[0];
+                    let getUrlParams = this.formData.addr.split('?')[1].split("&");
+                    for (let i = 0; i <getUrlParams.length ; i++) {
+                        let headers = {name: getUrlParams[i].split("=")[0], value: getUrlParams[i].split("=")[1], required:"True", restrict: "", description: ""};
+                        this.formData.parameter.push(headers);
+                        let rows = [this.formData.parameter[this.formData.parameter.length-1]];
+                        this.toggleParameterSelection(rows)
+                    }
+                }
+            },
+        },
+
+        mounted() {
+            this.toggleHeadSelection(this.form.head);
+            this.toggleParameterSelection(this.form.parameter);
         }
     }
 </script>
+
+<style>
+    .parameter-a {
+        display: block;
+    }
+    .parameter-b {
+        display: none;
+    }
+</style>
