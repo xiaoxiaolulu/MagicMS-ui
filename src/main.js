@@ -11,11 +11,11 @@ import 'element-ui/lib/theme-chalk/index.css'
 import fetch from './assets/js/fetch'
 import formatters from './assets/js/formatters'
 import veeValidate from './assets/js/veeValidate'
-import './assets/iconfont.css' // 自定义的icon
+import './assets/iconfont.css'
 import VueCodemirror from 'vue-codemirror'
-// require styles
 import 'codemirror/lib/codemirror.css'
 import './assets/iconfont/iconfont.css'
+import JSONView from 'vue-json-viewer'
 
 Vue.config.productionTip = false;
 
@@ -26,6 +26,7 @@ Vue.config.productionTip = false;
 // 全局使用 element-ui
 Vue.use(elementUi);
 Vue.use(VueCodemirror);
+Vue.use(JSONView);
 
 // 全局使用 vee-validate
 Vue.use(veeValidate, {

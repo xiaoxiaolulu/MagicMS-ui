@@ -123,6 +123,36 @@
                                       placeholder="请输入内容" v-model.trim="formData.parameterRaw"></el-input>
                         </template>
                     </el-collapse-item>
+                    <el-collapse-item title="响应结果" name="4">
+                        <div style="margin-bottom: 10px">
+                            <el-button @click="showBody">Body</el-button>
+                            <el-button @click="showHeader">Head</el-button>
+                            <div :class="formatJson? 'parameter-b': 'code-a'">
+                                Status: <span
+                                    :class="formData.statusCode===200? 'green': 'red'">{{formData.statusCode}}</span>
+                            </div>
+                        </div>
+                        <el-card class="box-card">
+                            <div v-model="formData.resultData" :class="resultShow? 'parameter-a': 'parameter-b'"
+                                 v-show="!format">
+                                <div style="word-break: break-all;overflow:auto;overflow-x:hidden;">
+                                    <json-viewer :value="formData.resultData" :expand-depth="5" copyable boxed sort
+                                                 :class="formatJson? 'parameter-b': 'parameter-a'"></json-viewer>
+                                </div>
+                            </div>
+                            <div :class="resultShow? 'parameter-b': 'parameter-a'">
+                                <el-table :data="formData.resultHead" border v-if="headerTable">
+                                    <el-table-column prop="name" label="KEY"></el-table-column>
+                                    <el-table-column prop="value" label="VALUE"></el-table-column>
+                                </el-table>
+                            </div>
+                            <div :class="resultShow? 'parameter-a': 'parameter-b'"
+                                 v-show="format && formData.resultData">
+                                <pre style="border: 1px solid #e6e6e6;word-break: break-all;overflow:auto;overflow-x:hidden">{{formData.resultData}}</pre>
+                            </div>
+                            <div v-show="!formData.resultData&&!formData.resultHead" class="raw">暂无数据</div>
+                        </el-card>
+                    </el-collapse-item>
                 </el-collapse>
             </el-row>
         </el-form>
@@ -198,13 +228,20 @@
                         {name: "", value: ""}],
                     parameter: [{name: "", value: "", required: "", restrict: "", description: ""}],
                     parameterRaw: "",
+                    statusCode: "",
+                    resultData: "",
+                    resultHead: "",
                 },
                 resetRules: {},
                 loading: false,
                 title: '',
                 addDialogVisible: false,
                 activeName: 'second',
-                disabled: false
+                disabled: false,
+                resultShow: true,
+                format: false,
+                formatJson: true,
+                headerTable: false
             }
         },
 
@@ -265,7 +302,6 @@
             },
 
             delParameter(index) {
-                console.log("我就测试一下" + ":" + index);
                 if (this.formData.parameter.length !== 1) {
                     this.formData.parameter.splice(index, 1)
                 }
@@ -290,6 +326,13 @@
                 } else {
                     this.ParameterType = !this.ParameterType
                 }
+            },
+
+            showBody() {
+                this.resultShow = true
+            },
+            showHeader() {
+                this.resultShow = false
             },
 
             fastTest(formName) {
@@ -331,8 +374,6 @@
                         }
                     }
                     _parameter = JSON.stringify(_parameter);
-                    console.log("测试")
-                    console.log(_parameter)
                 }
 
                 this.$refs[formName].validate((valid) => {
@@ -345,6 +386,12 @@
                             project: this.formData.id
                         }).then((response) => {
                             console.log(response.data);
+                            this.loadingSend = false;
+                            this.formatJson = false;
+                            this.headerTable = true;
+                            this.formData.statusCode = response.data.data.status_code;
+                            this.formData.resultData = JSON.stringify(response.data.data.response_body, null, 4);
+                            this.formData.resultHead = this.formData.head
                         }).catch((err) => {
                             if (err.response.status === 400) {
                                 if (err.response.data.code) {
@@ -379,8 +426,8 @@
         },
 
         mounted() {
-            this.toggleHeadSelection(this.form.head);
-            this.toggleParameterSelection(this.form.parameter);
+            this.toggleHeadSelection(this.formData.head);
+            this.toggleParameterSelection(this.formData.parameter);
         }
     }
 </script>
@@ -392,5 +439,21 @@
 
     .parameter-b {
         display: none;
+    }
+
+    .code-a {
+        display: inline-block;
+        float: right;
+    }
+
+    .red {
+        color: red;
+        font-size: 15px;
+    }
+
+    .green {
+        color: lightgreen;
+        font-size: 15px;
+
     }
 </style>
