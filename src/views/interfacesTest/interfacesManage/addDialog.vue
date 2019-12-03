@@ -12,15 +12,21 @@
                     <el-col :span="3">
                         <el-form-item>
                             <el-select v-model="formData.request4" placeholder="请求方式" @change="checkRequest" value="">
-                                <el-option v-for="(item,index) in request" :key="index+''" :label="item.label" :value="item.value"></el-option>
+                                <el-option v-for="(item,index) in request" :key="index+''" :label="item.label"
+                                           :value="item.value"></el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
                     <el-col :span='15'>
                         <el-form-item prop="addr">
                             <el-row :gutter="2">
-                                <el-col :span="22"><el-input v-model.trim="formData.addr" placeholder="地址" auto-complete=""></el-input></el-col>
-                                <el-col :span="2"><el-button class="el-icon-refresh-left" @click="Refresh" :disabled="disabled"></el-button></el-col>
+                                <el-col :span="22">
+                                    <el-input v-model.trim="formData.addr" placeholder="地址" auto-complete=""></el-input>
+                                </el-col>
+                                <el-col :span="2">
+                                    <el-button class="el-icon-refresh-left" @click="Refresh"
+                                               :disabled="disabled"></el-button>
+                                </el-col>
                             </el-row>
                         </el-form-item>
                     </el-col>
@@ -38,24 +44,28 @@
                             <el-table-column prop="name" label="标签" min-width="20%" sortable>
                                 <template slot-scope="scope">
                                     <el-select placeholder="head标签" filterable v-model="scope.row.name" value="">
-                                        <el-option v-for="(item,index) in header" :key="index+''" :label="item.label" :value="item.value"></el-option>
+                                        <el-option v-for="(item,index) in header" :key="index+''" :label="item.label"
+                                                   :value="item.value"></el-option>
                                     </el-select>
-<!--                                    <el-input class="selectInput" v-model.trim="scope.row.name" :value="scope.row.name" placeholder="请输入内容"></el-input>-->
+                                    <!--                                    <el-input class="selectInput" v-model.trim="scope.row.name" :value="scope.row.name" placeholder="请输入内容"></el-input>-->
                                 </template>
                             </el-table-column>
                             <el-table-column prop="value" label="内容" min-width="40%" sortable>
                                 <template slot-scope="scope">
-                                    <el-input v-model.trim="scope.row.value" :value="scope.row.value" placeholder="请输入内容"></el-input>
+                                    <el-input v-model.trim="scope.row.value" :value="scope.row.value"
+                                              placeholder="请输入内容"></el-input>
                                 </template>
                             </el-table-column>
                             <el-table-column label="操作" min-width="7%">
                                 <template slot-scope="scope">
-                                    <i class="el-icon-delete" style="font-size:30px;cursor:pointer;" @click="delHead(scope.$index)"></i>
+                                    <i class="el-icon-delete" style="font-size:30px;cursor:pointer;"
+                                       @click="delHead(scope.$index)"></i>
                                 </template>
                             </el-table-column>
                             <el-table-column label="" min-width="10%">
                                 <template slot-scope="scope">
-                                    <el-button v-if="scope.$index===(formData.head.length-1)" size="mini" class="el-icon-plus" @click="addHead"></el-button>
+                                    <el-button v-if="scope.$index===(formData.head.length-1)" size="mini"
+                                               class="el-icon-plus" @click="addHead"></el-button>
                                 </template>
                             </el-table-column>
                             <el-table-column min-width="18%">
@@ -65,38 +75,52 @@
                     <el-collapse-item title="请求参数" name="2">
                         <div style="margin: 5px">
                             <el-row :span="24">
-                                <el-col :span="4"><el-radio v-model="radio" label="form-data">表单(form-data)</el-radio></el-col>
-                                <el-col :span="4"><el-radio v-model="radio" label="raw" v-if="request3">源数据(raw)</el-radio></el-col>
-                                <el-col v-show="request3" :span="16"><el-checkbox v-model="radioType" label="3" v-show="ParameterType">表单转源数据</el-checkbox></el-col>
+                                <el-col :span="4">
+                                    <el-radio v-model="radio" label="form-data">表单(form-data)</el-radio>
+                                </el-col>
+                                <el-col :span="4">
+                                    <el-radio v-model="radio" label="raw" v-if="request3">源数据(raw)</el-radio>
+                                </el-col>
+                                <el-col v-show="request3" :span="16">
+                                    <el-checkbox v-model="radioType" label="3" v-show="ParameterType">表单转源数据
+                                    </el-checkbox>
+                                </el-col>
                             </el-row>
                         </div>
-                        <el-table ref="multipleParameterTable" :data="formData.parameter" highlight-current-row :class="ParameterType? 'parameter-a': 'parameter-b'" @selection-change="selsChangeParameter">
+                        <el-table ref="multipleParameterTable" :data="formData.parameter" highlight-current-row
+                                  :class="ParameterType? 'parameter-a': 'parameter-b'"
+                                  @selection-change="selsChangeParameter">
                             <el-table-column type="selection" min-width="5%" label="头部">
                             </el-table-column>
                             <el-table-column prop="name" label="参数名" min-width="20%" sortable>
                                 <template slot-scope="scope">
-                                    <el-input v-model.trim="scope.row.name" :value="scope.row.name" placeholder="请输入参数值"></el-input>
+                                    <el-input v-model.trim="scope.row.name" :value="scope.row.name"
+                                              placeholder="请输入参数值"></el-input>
                                 </template>
                             </el-table-column>
                             <el-table-column prop="value" label="参数值" min-width="40%" sortable>
                                 <template slot-scope="scope">
-                                    <el-input v-model.trim="scope.row.value" :value="scope.row.value" placeholder="请输入参数值"></el-input>
+                                    <el-input v-model.trim="scope.row.value" :value="scope.row.value"
+                                              placeholder="请输入参数值"></el-input>
                                 </template>
                             </el-table-column>
                             <el-table-column label="操作" min-width="7%">
                                 <template slot-scope="scope">
-                                    <i class="el-icon-delete" style="font-size:30px;cursor:pointer;" @click="delParameter(scope.$index)"></i>
+                                    <i class="el-icon-delete" style="font-size:30px;cursor:pointer;"
+                                       @click="delParameter(scope.$index)"></i>
                                 </template>
                             </el-table-column>
                             <el-table-column label="" min-width="10%">
                                 <template slot-scope="scope">
-                                    <el-button v-if="scope.$index===(formData.parameter.length-1)" size="mini" class="el-icon-plus" @click="addParameter"></el-button>
+                                    <el-button v-if="scope.$index===(formData.parameter.length-1)" size="mini"
+                                               class="el-icon-plus" @click="addParameter"></el-button>
                                 </template>
                             </el-table-column>
                             <el-table-column label="" min-width="18%"></el-table-column>
                         </el-table>
                         <template>
-                            <el-input :class="ParameterType? 'parameter-b': 'parameter-a'" type="textarea" :rows="5" placeholder="请输入内容" v-model.trim="formData.parameterRaw"></el-input>
+                            <el-input :class="ParameterType? 'parameter-b': 'parameter-a'" type="textarea" :rows="5"
+                                      placeholder="请输入内容" v-model.trim="formData.parameterRaw"></el-input>
                         </template>
                     </el-collapse-item>
                 </el-collapse>
@@ -172,11 +196,10 @@
                     addr: '',
                     head: [{name: "", value: ""},
                         {name: "", value: ""}],
-                    parameter: [{name: "", value: "", required:"", restrict: "", description: ""}],
+                    parameter: [{name: "", value: "", required: "", restrict: "", description: ""}],
                     parameterRaw: "",
                 },
-                resetRules: {
-                },
+                resetRules: {},
                 loading: false,
                 title: '',
                 addDialogVisible: false,
@@ -193,7 +216,7 @@
             value(val) {
                 this.addDialogVisible = val;
                 this.errors.clear();
-                this.formData = { ...this.dialogData }
+                this.formData = {...this.dialogData}
             },
             editDialogVisible(val) {
                 this.$emit('input', val)
@@ -210,7 +233,7 @@
                 console.log(tab, event);
             },
 
-            checkRequest(){
+            checkRequest() {
                 let request = this.formData.request4;
                 this.request3 = !(request === "GET" || request === "DELETE");
             },
@@ -227,7 +250,7 @@
             addHead() {
                 let headers = {name: "", value: ""};
                 this.formData.head.push(headers);
-                let rows = [this.formData.head[this.formData.head.length-1]];
+                let rows = [this.formData.head[this.formData.head.length - 1]];
                 this.toggleHeadSelection(rows)
             },
 
@@ -255,9 +278,9 @@
             },
 
             addParameter() {
-                let headers = {name: "", value: "", required:"True", restrict: "", description: ""};
+                let headers = {name: "", value: "", required: "True", restrict: "", description: ""};
                 this.formData.parameter.push(headers);
-                let rows = [this.formData.parameter[this.formData.parameter.length-1]];
+                let rows = [this.formData.parameter[this.formData.parameter.length - 1]];
                 this.toggleParameterSelection(rows)
             },
 
@@ -284,16 +307,16 @@
 
                 // 请求参数
                 let _type = this.radio;
-                let _parameter = this.formData.request4 === 'get' ? "": {};
+                let _parameter = this.formData.request4 === 'get' ? "" : {};
 
-                if (this.formData.request4 === 'get'){
-                    let arrParams= [];
-                    for(let i=0; i < this.formData.parameter.length; i++){
-                        try{
+                if (this.formData.request4 === 'get') {
+                    let arrParams = [];
+                    for (let i = 0; i < this.formData.parameter.length; i++) {
+                        try {
                             var a = this.formData.parameter[i]['name'];
                             var b = this.formData.parameter[i]['value'];
                             arrParams.push(a + '=' + b);
-                        }catch (e) {
+                        } catch (e) {
                             console.log(e)
                         }
                     }
@@ -307,7 +330,9 @@
                             _parameter[a] = this.formData.parameter[i]["value"];
                         }
                     }
-                    _parameter = JSON.stringify(_parameter)
+                    _parameter = JSON.stringify(_parameter);
+                    console.log("测试")
+                    console.log(_parameter)
                 }
 
                 this.$refs[formName].validate((valid) => {
@@ -323,7 +348,7 @@
                         }).catch((err) => {
                             if (err.response.status === 400) {
                                 if (err.response.data.code) {
-                                    this.$message({ message: err.response.data.code, type: 'error' })
+                                    this.$message({message: err.response.data.code, type: 'error'})
                                 }
                             }
                         })
@@ -332,15 +357,21 @@
 
             },
 
-            Refresh () {
-                if (this.formData.addr.indexOf('?') !== -1){
+            Refresh() {
+                if (this.formData.addr.indexOf('?') !== -1) {
                     this.disabled = true;
                     delete this.formData.parameter[0];
                     let getUrlParams = this.formData.addr.split('?')[1].split("&");
-                    for (let i = 0; i <getUrlParams.length ; i++) {
-                        let headers = {name: getUrlParams[i].split("=")[0], value: getUrlParams[i].split("=")[1], required:"True", restrict: "", description: ""};
+                    for (let i = 0; i < getUrlParams.length; i++) {
+                        let headers = {
+                            name: getUrlParams[i].split("=")[0],
+                            value: getUrlParams[i].split("=")[1],
+                            required: "True",
+                            restrict: "",
+                            description: ""
+                        };
                         this.formData.parameter.push(headers);
-                        let rows = [this.formData.parameter[this.formData.parameter.length-1]];
+                        let rows = [this.formData.parameter[this.formData.parameter.length - 1]];
                         this.toggleParameterSelection(rows)
                     }
                 }
@@ -358,6 +389,7 @@
     .parameter-a {
         display: block;
     }
+
     .parameter-b {
         display: none;
     }

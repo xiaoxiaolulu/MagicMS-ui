@@ -7,7 +7,7 @@
             <el-form-item label="环境名称">
                 <el-input v-model="formData.name"></el-input>
             </el-form-item>
-            <el-form-item label="环境描述">
+            <el-form-item label="环境路由">
                 <el-input v-model="formData.host_address"></el-input>
             </el-form-item>
             <el-form-item label="环境描述">
