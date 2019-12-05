@@ -72,3 +72,15 @@ export const updateFunction = params => {return axios.patch(`${host}/functions/$
 
 // 接口调试
 export const apiDebug = params => {return axios.post(`${host}/interfaces_debug/`, params)};
+
+// 添加接口
+export const createApi = params => {return axios.post(`${host}/interfaces/`, params)};
+
+// 获取接口列表
+export const getApiList = params => {return axios.get(`${host}/interfaces/`, params)};
+
+// 编辑接口
+export const updateApi = params => {return axios.patch(`${host}/interfaces/${params.interface_id}/`, params)};
+
+// 删除接口
+export const deleteApi = params => { return axios.delete(`${host}/interfaces/${params.interface_id}/`)};

@@ -85,7 +85,7 @@
                 this.errors.clear();
                 this.formData = { ...this.dialogData }
             },
-            editDialogVisible(val) {
+            addDialogVisible(val) {
                 this.$emit('input', val)
             }
         },

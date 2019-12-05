@@ -12,11 +12,11 @@
     "element-ui": "^2.12.0",
     "moment": "^2.24.0",
     "register-service-worker": "^1.6.2",
-    "vee-validate": "^3.0.11",
+    "vee-validate": "2.0.0-rc.25",
     "vue": "^2.6.10",
+    "vue-json-viewer": "^2.2.8",
     "vue-router": "^3.0.6",
-    "vuex": "^3.1.1",
-    "vue-json-viewer": "^2.2.8"
+    "vuex": "^3.1.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.0.0",
@@ -25,6 +25,7 @@
     "@vue/cli-plugin-vuex": "^4.0.0",
     "@vue/cli-service": "^4.0.0",
     "blueimp-md5": "^2.12.0",
+    "vue-validator": "3.0.0-alpha.2",
     "node-sass": "^4.5.0",
     "sass-loader": "^7.3.1",
     "vue-codemirror": "^4.0.6",

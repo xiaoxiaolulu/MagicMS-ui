@@ -4,7 +4,7 @@
             <el-button size="small" type="success" @click="addMenu">添加环境</el-button>
         </div>
         <el-table
-                :data="tableData.slice((queryParams.currentPage-1)*20,queryParams.currentPage*20)"
+                :data="tableData"
                 v-loading="tableLoading"
                 element-loading-text="拼命加载中"
                 height="100%"

@@ -1,14 +1,14 @@
 <template>
     <div>
         <div class="lk-toolbar">
-            <el-button size="small" type="success" @click="addMenu">添加项目</el-button>
+            <el-button size="small" type="success" @click="addMenu(null)">添加项目</el-button>
         </div>
         <el-table
-                :data="tableData.slice((queryParams.currentPage-1)*20,queryParams.currentPage*20)" :row-class-name="tableRowClassName"
+                :data="tableData"
                 v-loading="tableLoading"
-            element-loading-text="拼命加载中"
-            height="100%"
-            border>
+                element-loading-text="拼命加载中"
+                height="100%"
+                border>
             <el-table-column type="index" width="50" label="序号"></el-table-column>
             <el-table-column prop="name" min-width="150" label="项目名称"></el-table-column>
             <el-table-column prop="creator.nick_name" min-width="150" label="创建人"></el-table-column>
@@ -30,7 +30,7 @@
             :total="total"
             layout="->, total, prev, pager, next, jumper">
         </el-pagination>
-        <add-dialog v-model="addDialogVisible" :dialogData="menuData"></add-dialog>
+        <add-dialog v-model="addDialogVisible" :dialogData="rowData"></add-dialog>
         <edit-dialog v-model="editDialogVisible" :dialogData='rowData'></edit-dialog>
     </div>
 </template>
@@ -50,7 +50,6 @@ export default {
             name: null,
             addDialogVisible: false,
             editDialogVisible: false,
-            menuData: null,
             tableData: null,
             rowData: null,
             total: null,
@@ -76,26 +75,13 @@ export default {
             }).catch((error) => {
                 console.log(error.response.data)
             })
-            // this.$apis.queryApp(this.queryParams).then(res => {
-            //     this.tableLoading = false
-            //     if (res.code === '2000') {
-            //         this.tableData = res.data.list
-            //         this.total = res.data.total
-            //     } else {
-            //         this.$message.error(res.message)
-            //     }
-            // }).catch(error => {
-            //     this.tableLoading = false
-            //     this.$message.error(error)
-            // })
         },
         editMenu(row) {
             this.rowData = row;
             this.editDialogVisible = true
         },
-        addMenu(row, editable) {
-            this.menuData = row;
-            this.menuData.editable = editable;
+        addMenu(row) {
+            this.rowData = row;
             this.addDialogVisible = true;
         },
         deleteProjectData(row){
@@ -111,13 +97,6 @@ export default {
                   }
               })
           }).catch(_ => {})
-        },
-        tableRowClassName({ row, rowIndex }) {
-            if (row.disabled) {
-                return 'disabled-row'
-            } else {
-                return ''
-            }
         }
     }
 }

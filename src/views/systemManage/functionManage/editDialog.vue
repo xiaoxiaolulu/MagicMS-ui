@@ -124,7 +124,8 @@
             value(val) {
                 this.editDialogVisible = val;
                 this.errors.clear();
-                this.formData = { ...this.dialogData }
+                this.formData = { ...this.dialogData };
+                this.code = this.$parent.rowData.function
             },
             editDialogVisible(val) {
                 this.$emit('input', val)
@@ -140,7 +141,6 @@
                             function: this.code,
                             desc: this.formData.desc,
                         }).then((response) => {
-                            console.log(response.data);
                             this.editDialogVisible = false;
                             this.$parent.queryList()
                         }).catch((err) => {

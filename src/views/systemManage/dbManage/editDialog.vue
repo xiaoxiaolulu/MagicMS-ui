@@ -138,7 +138,15 @@
             value(val) {
                 this.editDialogVisible = val;
                 this.errors.clear();
-                this.formData = { ...this.dialogData }
+                this.formData = {
+                    name:  this.$parent.rowData.name,
+                    type:  this.$parent.rowData.db_type,
+                    user:  this.$parent.rowData.db_user,
+                    password:  this.$parent.rowData.db_password,
+                    host:  this.$parent.rowData.db_host,
+                    port:  this.$parent.rowData.db_port,
+                    desc:  this.$parent.rowData.desc,
+                }
             },
             editDialogVisible(val) {
                 this.$emit('input', val)
@@ -148,6 +156,7 @@
             submitForm (formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
+
                         updateDbSetting({
                             db_id: this.$parent.rowData.id,
                             name: this.formData.name,

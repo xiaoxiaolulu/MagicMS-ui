@@ -4,7 +4,7 @@
             <el-button size="small" type="success" @click="addMenu">添加数据库配置</el-button>
         </div>
         <el-table
-                :data="tableData.slice((queryParams.currentPage-1)*20,queryParams.currentPage*20)"
+                :data="tableData"
                 v-loading="tableLoading"
                 element-loading-text="拼命加载中"
                 height="100%"
@@ -79,18 +79,6 @@
                 }).catch((error) => {
                     console.log(error.response.data)
                 })
-                // this.$apis.queryApp(this.queryParams).then(res => {
-                //     this.tableLoading = false
-                //     if (res.code === '2000') {
-                //         this.tableData = res.data.list
-                //         this.total = res.data.total
-                //     } else {
-                //         this.$message.error(res.message)
-                //     }
-                // }).catch(error => {
-                //     this.tableLoading = false
-                //     this.$message.error(error)
-                // })
             },
             editMenu(row) {
                 this.rowData = row;
