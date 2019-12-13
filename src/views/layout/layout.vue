@@ -84,7 +84,9 @@
             signOut() {
                 this.$apis.logout().then(res => {
                     if (res.code === '2000') {
-                        localStorage.clear();
+                        cookie.delCookie('token');
+                        cookie.delCookie('username');
+                        cookie.delCookie('userid');
                         this.$router.push('/login')
                     } else {
                         this.$message.error(res.message)
@@ -95,7 +97,9 @@
             },
             initMenu() {
                 this.$apis.initMenu().then(res => {
-                    if (res.code === '2000') {
+                    if (cookie.getCookie('token') === null){
+                        this.$router.push('/login')
+                    } else if  (res.code === '2000') {
                         this.menus = res.data.menus;
                         this.userInfo.userName = unescape(cookie.getCookie('username'));
                         console.log(unescape(cookie.getCookie('username')))

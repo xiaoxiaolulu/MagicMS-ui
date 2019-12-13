@@ -1,7 +1,26 @@
 <template>
     <div>
         <div class="lk-toolbar">
-            <el-button size="small" type="success" @click="addMenu">添加数据库配置</el-button>
+            <el-form :inline="true" :model="queryParams" ref="queryParams">
+                <el-form-item label="数据库名称"  prop="name">
+                    <el-input size="small" clearable type="name" v-model.trim="queryParams.name" placeholder="数据库名称"></el-input>
+                </el-form-item>
+                <el-form-item label="数据库类型" prop="type">
+                    <el-select type="type" v-model="queryParams.type" v-loading="loading" element-loading-spinner="el-icon-loading" clearable filterable>
+                        <el-option v-for="item in type" :value="item" :key="null">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item>
+                    <el-button size="small" type="primary" icon="el-icon-search" @click="queryList">搜索</el-button>
+                </el-form-item>
+                <el-form-item>
+                    <el-button size="small" type="danger" icon="el-icon-delete" @click="resetForm('queryParams')">重置</el-button>
+                </el-form-item>
+            </el-form>
+        </div>
+        <div class="lk-button">
+            <el-button size="small" type="success" @click="addMenu">新增</el-button>
         </div>
         <el-table
                 :data="tableData"
@@ -48,6 +67,8 @@
         data() {
             return {
                 queryParams: {
+                    name: null,
+                    type: null,
                     currentPage: 1
                 },
                 name: null,
@@ -58,7 +79,13 @@
                 rowData: null,
                 total: null,
                 tableLoading: false,
-                dbList: []
+                dbList: [],
+                loading: false,
+                type: ['MySQL', 'MariaDB', 'Percona Server', 'PostgreSQL', 'Microsoft Access',
+                    'Microsoft SQL Server', 'Google Fusion Tables', 'FileMaker', 'Oracle', 'Sybase',
+                    'dBASE', 'Clipper', 'FoxPro', 'foshub', 'BigTable', 'Cassandra', 'MongoDB', 'CouchDB',
+                    'Apache Cassandra'
+                ]
             }
         },
         components: {
@@ -68,10 +95,18 @@
         created() {
             this.queryList()
         },
+        watch: {
+            value: function (val) {
+                this.currentValue = val
+            },
+            currentValue: function (val) {
+                this.$emit('input', val)
+            }
+        },
         methods: {
             queryList() {
                 this.tableLoading = true;
-                getDbSettingList({ params: { name: this.name} }).then((response) => {
+                getDbSettingList({ params: this.queryParams}).then((response) => {
                     this.tableLoading = false;
                     console.log(response.data.data);
                     this.tableData = response.data.data;
@@ -80,6 +115,18 @@
                     console.log(error.response.data)
                 })
             },
+            resetForm(formName) {
+                console.log("测试1")
+                console.log(this.queryParams.name)
+                console.log(this.queryParams.type)
+                console.log("测试1")
+                this.$refs[formName].resetFields();
+                console.log("测试2")
+                console.log(this.queryParams.name)
+                console.log(this.queryParams.type)
+                console.log("测试2")
+            },
+
             editMenu(row) {
                 this.rowData = row;
                 this.editDialogVisible = true

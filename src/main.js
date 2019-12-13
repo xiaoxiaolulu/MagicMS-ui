@@ -45,7 +45,7 @@ Vue.prototype.$moment = moment;
 // vue原型挂载 - 初始化平台信息，默认配置为【喵盟】
 Vue.prototype.$brandInfo = {
   brandId: 1,
-  brandName: 'MagicTestDevMS'
+  brandName: 'PostLittleBoy'
 };
 
 // vue原型挂载 - 表格数据格式化函数

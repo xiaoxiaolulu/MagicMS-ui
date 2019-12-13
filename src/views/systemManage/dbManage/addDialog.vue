@@ -99,7 +99,11 @@
             return {
                 formData: {
                     name: '',
-                    type: '',
+                    type: ['MySQL', 'MariaDB', 'Percona Server', 'PostgreSQL', 'Microsoft Access',
+                        'Microsoft SQL Server', 'Google Fusion Tables', 'FileMaker', 'Oracle', 'Sybase',
+                        'dBASE', 'Clipper', 'FoxPro', 'foshub', 'BigTable', 'Cassandra', 'MongoDB', 'CouchDB',
+                        'Apache Cassandra'
+                    ],
                     user: '',
                     password: '',
                     host: '',

@@ -10,42 +10,42 @@
           {
             "disabled": false,
             "menuIcon": "",
-            "menuId": 3432876543456432000,
+            "menuId": 101,
             "menuName": "内置函数",
             "menuPath": "functionManage",
             "menuRemark": "我是权限备注",
-            "parentMenuId": 1032146087424770001
+            "parentMenuId": 100
           },
           {
             "disabled": false,
             "menuIcon": "",
-            "menuId": 1032146280702492300,
+            "menuId": 102,
             "menuName": "项目配置",
             "menuPath": "projectManage",
             "menuRemark": "“我是备注”",
-            "parentMenuId": 1032146087424770001
+            "parentMenuId": 100
           },
           {
             "disabled": false,
             "menuIcon": "",
-            "menuId": 1032146280702492700,
+            "menuId": 103,
             "menuName": "环境配置",
             "menuPath": "environmentManage",
             "menuRemark": "“我是备注”",
-            "parentMenuId": 1032146087424770001
+            "parentMenuId": 100
           },
           {
             "disabled": false,
-            "menuId": 34567650980909,
+            "menuId": 104,
             "menuName": "数据库配置",
             "menuPath": "dbManage",
             "menuRemark": "",
-            "parentMenuId": 1032146087424770001
+            "parentMenuId": 100
           }
         ],
         "disabled": false,
         "menuIcon": "el-icon-setting",
-        "menuId": 1032146087424770001,
+        "menuId": 100,
         "menuName": "项目管理",
         "menuPath": "a",
         "menuRemark": "",
@@ -56,15 +56,15 @@
         "children": [
           {
             "disabled": false,
-            "menuId": 1042980918683979800,
+            "menuId": 201,
             "menuName": "接口配置",
             "menuPath": "interfacesManage",
-            "parentMenuId": 1032146087424770002
+            "parentMenuId": 200
           }
         ],
         "disabled": false,
         "menuIcon": "el-icon-printer",
-        "menuId": 1032146087424770002,
+        "menuId": 200,
         "menuName": "接口测试",
         "menuPath": "z",
         "menuRemark": "",

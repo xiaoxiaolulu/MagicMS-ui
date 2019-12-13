@@ -99,7 +99,11 @@
             return {
                 formData: {
                     name: '',
-                    type: '',
+                    type: ['MySQL', 'MariaDB', 'Percona Server', 'PostgreSQL', 'Microsoft Access',
+                        'Microsoft SQL Server', 'Google Fusion Tables', 'FileMaker', 'Oracle', 'Sybase',
+                        'dBASE', 'Clipper', 'FoxPro', 'foshub', 'BigTable', 'Cassandra', 'MongoDB', 'CouchDB',
+                        'Apache Cassandra'
+                    ],
                     user: '',
                     password: '',
                     host: '',
@@ -108,25 +112,25 @@
                 },
                 resetRules: {
                     name: [
-                        { required: true, trigger: 'blur', validator: validaeDBName }
+                        {required: true, trigger: 'blur', validator: validaeDBName}
                     ],
                     type: [
-                        { required: true, trigger: 'blur', validator: validateType }
+                        {required: true, trigger: 'blur', validator: validateType}
                     ],
                     user: [
-                        { required: true, trigger: 'blur', validator: validateUser }
+                        {required: true, trigger: 'blur', validator: validateUser}
                     ],
                     password: [
-                        { required: true, trigger: 'blur', validator: validatePassword }
+                        {required: true, trigger: 'blur', validator: validatePassword}
                     ],
                     host: [
-                        { required: true, trigger: 'blur', validator: validateIP }
+                        {required: true, trigger: 'blur', validator: validateIP}
                     ],
                     port: [
-                        { required: true, trigger: 'blur', validator: validatePort }
+                        {required: true, trigger: 'blur', validator: validatePort}
                     ],
                     desc: [
-                        { required: true, trigger: 'blur', validator: validateDesc }
+                        {required: true, trigger: 'blur', validator: validateDesc}
                     ]
                 },
                 loading: false,
@@ -139,13 +143,13 @@
                 this.editDialogVisible = val;
                 this.errors.clear();
                 this.formData = {
-                    name:  this.$parent.rowData.name,
-                    type:  this.$parent.rowData.db_type,
-                    user:  this.$parent.rowData.db_user,
-                    password:  this.$parent.rowData.db_password,
-                    host:  this.$parent.rowData.db_host,
-                    port:  this.$parent.rowData.db_port,
-                    desc:  this.$parent.rowData.desc,
+                    name: this.$parent.rowData.name,
+                    type: this.$parent.rowData.db_type,
+                    user: this.$parent.rowData.db_user,
+                    password: this.$parent.rowData.db_password,
+                    host: this.$parent.rowData.db_host,
+                    port: this.$parent.rowData.db_port,
+                    desc: this.$parent.rowData.desc,
                 }
             },
             editDialogVisible(val) {
@@ -153,7 +157,7 @@
             }
         },
         methods: {
-            submitForm (formName) {
+            submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
 
@@ -173,9 +177,9 @@
                         }).catch((err) => {
                             if (err.response.status === 400) {
                                 if (err.response.data.code) {
-                                    this.$message({ message: err.response.data.code, type: 'error' })
+                                    this.$message({message: err.response.data.code, type: 'error'})
                                 } else if (err.response.data.email) {
-                                    this.$message({ message: err.response.data.email, type: 'error' })
+                                    this.$message({message: err.response.data.email, type: 'error'})
                                 }
                             }
                         })

@@ -5,13 +5,9 @@
 </template>
 
 <script>
-  import TopNav from './views/TopNav'
   export default {
     created() {document.title="MagicMs";},
     name: 'App',
-    components: {
-      TopNav
-    }
   }
 </script>
 

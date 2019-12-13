@@ -300,7 +300,7 @@
                 for (var key in params) {
                     paramsArray.push({name: key, value: params[key], required: "", restrict: "", description: ""})
                 }
-                
+
                 this.formData = {
                     addr: this.$parent.rowData.url,
                     testName: this.$parent.rowData.interface_name,
