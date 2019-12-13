@@ -72,6 +72,14 @@ const routes = [
         preTitle: '接口测试',
         title: '接口管理'
       }
+    },{
+      path: '/testCaseManage',
+      name: 'testCaseManage',
+      component: resolve => require(['@/views/interfacesTest/testCaseManage'], resolve),
+      meta: {
+        preTitle: '用例管理',
+        title: '接口管理'
+      }
     },
       {
       path: '/DataConstruction',

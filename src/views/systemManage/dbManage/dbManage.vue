@@ -6,17 +6,17 @@
                     <el-input size="small" clearable type="name" v-model.trim="queryParams.name" placeholder="数据库名称"></el-input>
                 </el-form-item>
                 <el-form-item label="数据库类型" prop="type">
-                    <el-select type="type" v-model="queryParams.type" v-loading="loading"
+                    <el-select size="small" type="type" v-model="queryParams.type" v-loading="loading"
                                element-loading-spinner="el-icon-loading" clearable filterable>
                         <el-option v-for="item in type" :value="item" :key="null">
                         </el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item>
-                    <el-button size="small" type="primary" icon="el-icon-search" @click="queryList">搜索</el-button>
+                    <el-button size="small" type="primary" icon="el-icon-search" @click="queryList"></el-button>
                 </el-form-item>
                 <el-form-item>
-                    <el-button size="small" type="danger" icon="el-icon-delete" @click="resetForm('queryParams')">重置</el-button>
+                    <el-button size="small" type="danger" icon="el-icon-delete" @click="resetForm('queryParams')"></el-button>
                 </el-form-item>
             </el-form>
         </div>

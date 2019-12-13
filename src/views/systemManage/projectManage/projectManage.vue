@@ -12,10 +12,10 @@
                     <el-input size="small" clearable type="host" v-model.trim="queryParams.host" placeholder="环境地址"></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-button size="small" type="primary" icon="el-icon-search" @click="queryList">搜索</el-button>
+                    <el-button size="small" type="primary" icon="el-icon-search" @click="queryList"></el-button>
                 </el-form-item>
                 <el-form-item>
-                    <el-button size="small" type="danger" icon="el-icon-delete" @click="resetForm('queryParams')">重置</el-button>
+                    <el-button size="small" type="danger" icon="el-icon-delete" @click="resetForm('queryParams')"></el-button>
                 </el-form-item>
             </el-form>
         </div>

@@ -60,6 +60,13 @@
             "menuName": "接口配置",
             "menuPath": "interfacesManage",
             "parentMenuId": 200
+          },
+          {
+            "disabled": false,
+            "menuId": 202,
+            "menuName": "测试用例",
+            "menuPath": "testCaseManage",
+            "parentMenuId": 200
           }
         ],
         "disabled": false,
