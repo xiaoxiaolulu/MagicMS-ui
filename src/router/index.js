@@ -33,30 +33,6 @@ const routes = [
       name: 'welcome',
       component: resolve => require(['@/views/welcome'], resolve)
     }, {
-      path: '/userDetail',
-      name: 'userDetail',
-      component: resolve => require(['@/views/userManage/userDetail'], resolve),
-      meta: {
-        preTitle: '用户管理',
-        title: '用户管理'
-      }
-    }, {
-      path: '/userLog',
-      name: 'userLog',
-      component: resolve => require(['@/views/userManage/userLog'], resolve),
-      meta: {
-        preTitle: '用户管理',
-        title: '用户日志查询'
-      }
-    }, {
-      path: '/userAssets',
-      name: 'userAssets',
-      component: resolve => require(['@/views/userManage/userAssets'], resolve),
-      meta: {
-        preTitle: '用户管理',
-        title: '用户资产查询'
-      }
-    }, {
       path: '/projectManage',
       name: 'projectManage',
       component: resolve => require(['@/views/systemManage/projectManage'], resolve),
@@ -71,14 +47,6 @@ const routes = [
       meta: {
         preTitle: '项目管理',
         title: '环境配置'
-      }
-    }, {
-      path: '/roleManage',
-      name: 'roleManage',
-      component: resolve => require(['@/views/systemManage/roleManage'], resolve),
-      meta: {
-        preTitle: '系统管理',
-        title: '分组权限管理'
       }
     }, {
       path: '/functionManage',

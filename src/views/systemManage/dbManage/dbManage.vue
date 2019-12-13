@@ -6,7 +6,8 @@
                     <el-input size="small" clearable type="name" v-model.trim="queryParams.name" placeholder="数据库名称"></el-input>
                 </el-form-item>
                 <el-form-item label="数据库类型" prop="type">
-                    <el-select type="type" v-model="queryParams.type" v-loading="loading" element-loading-spinner="el-icon-loading" clearable filterable>
+                    <el-select type="type" v-model="queryParams.type" v-loading="loading"
+                               element-loading-spinner="el-icon-loading" clearable filterable>
                         <el-option v-for="item in type" :value="item" :key="null">
                         </el-option>
                     </el-select>
@@ -81,7 +82,8 @@
                 tableLoading: false,
                 dbList: [],
                 loading: false,
-                type: ['MySQL', 'MariaDB', 'Percona Server', 'PostgreSQL', 'Microsoft Access',
+                type: [
+                    'MySQL', 'MariaDB', 'Percona Server', 'PostgreSQL', 'Microsoft Access',
                     'Microsoft SQL Server', 'Google Fusion Tables', 'FileMaker', 'Oracle', 'Sybase',
                     'dBASE', 'Clipper', 'FoxPro', 'foshub', 'BigTable', 'Cassandra', 'MongoDB', 'CouchDB',
                     'Apache Cassandra'
@@ -116,15 +118,8 @@
                 })
             },
             resetForm(formName) {
-                console.log("测试1")
-                console.log(this.queryParams.name)
-                console.log(this.queryParams.type)
-                console.log("测试1")
                 this.$refs[formName].resetFields();
-                console.log("测试2")
-                console.log(this.queryParams.name)
-                console.log(this.queryParams.type)
-                console.log("测试2")
+                this.queryList();
             },
 
             editMenu(row) {

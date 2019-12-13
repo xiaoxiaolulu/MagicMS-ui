@@ -1,7 +1,26 @@
 <template>
     <div>
         <div class="lk-toolbar">
-            <el-button size="small" type="success" @click="addMenu(null)">添加项目</el-button>
+            <el-form :inline="true" :model="queryParams" ref="queryParams">
+                <el-form-item label="项目名称"  prop="name">
+                    <el-input size="small" clearable type="name" v-model.trim="queryParams.name" placeholder="项目名称"></el-input>
+                </el-form-item>
+                <el-form-item label="环境名称"  prop="env">
+                    <el-input size="small" clearable type="env" v-model.trim="queryParams.env" placeholder="环境名称"></el-input>
+                </el-form-item>
+                <el-form-item label="环境地址"  prop="host">
+                    <el-input size="small" clearable type="host" v-model.trim="queryParams.host" placeholder="环境地址"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button size="small" type="primary" icon="el-icon-search" @click="queryList">搜索</el-button>
+                </el-form-item>
+                <el-form-item>
+                    <el-button size="small" type="danger" icon="el-icon-delete" @click="resetForm('queryParams')">重置</el-button>
+                </el-form-item>
+            </el-form>
+        </div>
+        <div class="lk-button">
+            <el-button size="small" type="success" @click="addMenu">新增</el-button>
         </div>
         <el-table
                 :data="tableData"
@@ -45,6 +64,9 @@ export default {
     data() {
         return {
             queryParams: {
+                name: null,
+                env: null,
+                host: null,
                 currentPage: 1
             },
             name: null,
@@ -65,9 +87,13 @@ export default {
         this.queryList()
     },
     methods: {
+        resetForm(formName) {
+            this.$refs[formName].resetFields();
+            this.queryList();
+        },
         queryList() {
             this.tableLoading = true;
-            getProjectList({ params: { name: this.name} }).then((response) => {
+            getProjectList({ params: this.queryParams }).then((response) => {
                 this.tableLoading = false;
                 console.log(response.data.data);
                 this.tableData = response.data.data;

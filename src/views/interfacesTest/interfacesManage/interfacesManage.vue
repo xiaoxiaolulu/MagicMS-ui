@@ -1,7 +1,33 @@
 <template>
     <div>
         <div class="lk-toolbar">
-            <el-button size="small" type="success" @click="addMenu">添加接口</el-button>
+            <el-form :inline="true" :model="queryParams" ref="queryParams">
+                <el-form-item label="接口名称"  prop="name">
+                    <el-input size="small" clearable type="name" v-model.trim="queryParams.name" placeholder="接口名称"></el-input>
+                </el-form-item>
+                <el-form-item label="接口地址"  prop="router">
+                    <el-input size="small" clearable type="router" v-model.trim="queryParams.router" placeholder="接口地址"></el-input>
+                </el-form-item>
+                <el-form-item label="请求类型" prop="type">
+                    <el-select type="type" v-model="queryParams.type" v-loading="loading"
+                               element-loading-spinner="el-icon-loading" clearable filterable>
+                        <el-option v-for="item in type" :value="item" :key="null">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="测试项目"  prop="project">
+                    <el-input size="small" clearable type="project" v-model.trim="queryParams.project" placeholder="测试项目"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button size="small" type="primary" icon="el-icon-search" @click="queryList">搜索</el-button>
+                </el-form-item>
+                <el-form-item>
+                    <el-button size="small" type="danger" icon="el-icon-delete" @click="resetForm('queryParams')">重置</el-button>
+                </el-form-item>
+            </el-form>
+        </div>
+        <div class="lk-button">
+            <el-button size="small" type="success" @click="addMenu">新增</el-button>
         </div>
         <el-table
                 :data="tableData"
@@ -48,8 +74,13 @@
         data() {
             return {
                 queryParams: {
+                    name: null,
+                    router: null,
+                    type: null,
+                    project: null,
                     currentPage: 1
                 },
+                type: ["GET", "POST", "DELETE", "PUT"],
                 name: null,
                 addDialogVisible: false,
                 editDialogVisible: false,
@@ -69,9 +100,13 @@
             this.queryList()
         },
         methods: {
+            resetForm(formName) {
+                this.$refs[formName].resetFields();
+                this.queryList();
+            },
             queryList() {
                 this.tableLoading = true;
-                getApiList({ params: { name: this.name} }).then((response) => {
+                getApiList({ params: this.queryParams }).then((response) => {
                     this.tableLoading = false;
                     console.log(response.data.data);
                     this.tableData = response.data.data;

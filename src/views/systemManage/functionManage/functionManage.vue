@@ -1,7 +1,20 @@
 <template>
     <div>
         <div class="lk-toolbar">
-            <el-button size="small" type="success" @click="addMenu">添加内置函数</el-button>
+            <el-form :inline="true" :model="queryParams" ref="queryParams">
+                <el-form-item label="函数名称"  prop="name">
+                    <el-input size="small" clearable type="name" v-model.trim="queryParams.name" placeholder="函数名称"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button size="small" type="primary" icon="el-icon-search" @click="queryList">搜索</el-button>
+                </el-form-item>
+                <el-form-item>
+                    <el-button size="small" type="danger" icon="el-icon-delete" @click="resetForm('queryParams')">重置</el-button>
+                </el-form-item>
+            </el-form>
+        </div>
+        <div class="lk-button">
+            <el-button size="small" type="success" @click="addMenu">新增</el-button>
         </div>
         <el-table
                 :data="tableData"
@@ -44,6 +57,7 @@
         data() {
             return {
                 queryParams: {
+                    name: null,
                     currentPage: 1
                 },
                 name: null,
@@ -65,9 +79,13 @@
             this.queryList()
         },
         methods: {
+            resetForm(formName) {
+                this.$refs[formName].resetFields();
+                this.queryList();
+            },
             queryList() {
                 this.tableLoading = true;
-                getFunctionList({ params: { name: this.name} }).then((response) => {
+                getFunctionList({ params: this.queryParams }).then((response) => {
                     this.tableLoading = false;
                     console.log(response.data.data);
                     this.tableData = response.data.data;

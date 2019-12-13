@@ -28,7 +28,7 @@
             </el-form-item>
             <el-form-item>
                 <el-button :loading="loading" type="primary" @click="submitForm('formData')">确 认</el-button>
-                <el-button @click="addDialogVisible = false">取 消</el-button>
+                <el-button @click="editDialogVisible = false">取 消</el-button>
             </el-form-item>
         </el-form>
     </el-dialog>

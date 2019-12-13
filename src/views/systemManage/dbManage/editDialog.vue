@@ -8,7 +8,11 @@
                 <el-input v-model="formData.name"></el-input>
             </el-form-item>
             <el-form-item label="数据库类型">
-                <el-input v-model="formData.type"></el-input>
+                <el-select type="type" v-model="formData.type" v-loading="loading"
+                           element-loading-spinner="el-icon-loading" clearable filterable>
+                    <el-option v-for="item in type" :value="item" :key="null">
+                    </el-option>
+                </el-select>
             </el-form-item>
             <el-form-item label="数据库账号">
                 <el-input v-model="formData.user"></el-input>
@@ -97,13 +101,15 @@
                 }
             };
             return {
+                type: [
+                    'MySQL', 'MariaDB', 'Percona Server', 'PostgreSQL', 'Microsoft Access',
+                    'Microsoft SQL Server', 'Google Fusion Tables', 'FileMaker', 'Oracle', 'Sybase',
+                    'dBASE', 'Clipper', 'FoxPro', 'foshub', 'BigTable', 'Cassandra', 'MongoDB', 'CouchDB',
+                    'Apache Cassandra'
+                ],
                 formData: {
                     name: '',
-                    type: ['MySQL', 'MariaDB', 'Percona Server', 'PostgreSQL', 'Microsoft Access',
-                        'Microsoft SQL Server', 'Google Fusion Tables', 'FileMaker', 'Oracle', 'Sybase',
-                        'dBASE', 'Clipper', 'FoxPro', 'foshub', 'BigTable', 'Cassandra', 'MongoDB', 'CouchDB',
-                        'Apache Cassandra'
-                    ],
+                    type: '',
                     user: '',
                     password: '',
                     host: '',
