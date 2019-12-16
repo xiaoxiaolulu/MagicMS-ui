@@ -53,8 +53,8 @@
                                 </el-table-column>
                                 <el-table-column prop="name" label="接口" min-width="20%">
                                     <template slot-scope="scope">
-                                        <role-select size="small" v-model.trim="scope.row.name" :value="scope.row.name" data-vv-as="接口">
-                                        </role-select>
+                                        <api-select size="small" v-model.trim="scope.row.name" :value="scope.row.name" data-vv-as="接口">
+                                        </api-select>
                                     </template>
                                 </el-table-column>
                                 <el-table-column prop="priority" label="优先级" min-width="40%">
@@ -137,8 +137,51 @@
                                 <el-table-column label="" min-width="18%"></el-table-column>
                             </el-table>
                             <template>
-                                <el-input size="small" :class="ParameterType? 'parameter-b': 'parameter-a'" type="textarea" :rows="5"
-                                          placeholder="请输入内容" v-model.trim="formData.parameterRaw"></el-input>
+                                <el-table ref="multipleParameterTable" :data="formData.dbCheck" highlight-current-row
+                                          :class="ParameterType? 'parameter-b': 'parameter-a'"
+                                          @selection-change="selsChangeDb" border :header-cell-style="{background:'#eef1f6',color:'#606266'}">
+                                    <el-table-column type="selection" min-width="5%" label="头部">
+                                    </el-table-column>
+                                    <el-table-column prop="db" label="db-setting" min-width="20%">
+                                        <template slot-scope="scope">
+                                            <api-select size="small" v-model.trim="scope.row.db" :value="scope.row.db" data-vv-as="数据库">
+                                            </api-select>
+                                        </template>
+                                    </el-table-column>
+                                    <el-table-column prop="name" label="key" min-width="20%">
+                                        <template slot-scope="scope">
+                                            <el-input size="small" v-model.trim="scope.row.name" :value="scope.row.name"
+                                                      placeholder="请输入断言的键"></el-input>
+                                        </template>
+                                    </el-table-column>
+                                    <el-table-column prop="comparetor" label="comparetor" min-width="20%">
+                                        <template slot-scope="scope">
+                                            <el-select size="small" placeholder="请选择校验器" filterable v-model.trim="scope.row.comparetor" :value="scope.row.comparetor">
+                                                <!--                                            EQU - 等于-->
+                                                <!--                                            NEQ - 不等于-->
+                                                <!--                                            LSS - 小于-->
+                                                <!--                                            LEQ - 小于或等于-->
+                                                <!--                                            GTR - 大于-->
+                                                <!--                                            GEQ - 大于或等于-->
+                                                <el-option v-for="(item,index) in comparetor" :key="index+''" :label="item.label"
+                                                           :value="item.value"></el-option>
+                                            </el-select>
+                                        </template>
+                                    </el-table-column>
+                                    <el-table-column prop="value" label="value" min-width="40%">
+                                        <template slot-scope="scope">
+                                            <el-input  size="small" v-model.trim="scope.row.value" :value="scope.row.value"
+                                                       placeholder="请输入断言的值"></el-input>
+                                        </template>
+                                    </el-table-column>
+                                    <el-table-column label="操作" min-width="7%">
+                                        <template slot-scope="scope">
+                                            <el-button size="small" class="el-icon-delete" @click="delDb(scope.$index)" type="text"></el-button>
+                                            <el-button size="small"  v-if="scope.$index===(formData.dbCheck.length-1)" class="el-icon-plus" @click="addDb" type="text"></el-button>
+                                        </template>
+                                    </el-table-column>
+                                    <el-table-column label="" min-width="18%"></el-table-column>
+                                </el-table>
                             </template>
                         </el-collapse-item>
                     </div>
@@ -150,7 +193,8 @@
 
 <script>
     import {apiDebug, createApi} from "../../../api/api";
-    import roleSelect from '@/components/roleSelectApi'
+    import apiSelect from '@/components/roleSelectApi'
+    import dbSelect from '@/components/roleSelectDb'
 
     export default {
         props: {
@@ -182,6 +226,7 @@
                 radioType: "",
                 ParameterType: true,
                 assertion: "",
+                dbCheck: "",
                 formData: {
                     testName: "",
                     desc: "",
@@ -189,11 +234,7 @@
                     addr: '',
                     api: [{name: "", priority: "", setUp:""}],
                     assertion: [{name: "", comparetor: "", value: ""}],
-                    parameterRaw: "",
-                    statusCode: "",
-                    resultData: "",
-                    resultHead: "",
-                    resultTimes: "",
+                    dbCheck: [{db: "", name: "", comparetor: "", value: ""}],
                 },
                 resetRules: {},
                 loading: false,
@@ -210,7 +251,8 @@
         },
 
         components: {
-            roleSelect
+            apiSelect,
+            dbSelect
         },
 
         watch: {
@@ -265,6 +307,10 @@
                 this.assertion = sels
             },
 
+            selsChangeDb: function (sels) {
+                this.dbCheck = sels
+            },
+
             delAssertion(index) {
                 if (this.formData.assertion.length !== 1) {
                     this.formData.assertion.splice(index, 1)
@@ -284,6 +330,18 @@
                 this.toggleParameterSelection(rows)
             },
 
+            delDb(index) {
+                if (this.formData.dbCheck.length !== 1) {
+                    this.formData.dbCheck.splice(index, 1)
+                }
+            },
+
+            addDb() {
+                let db = {db:"", name: "", comparetor: "", value: ""};
+                this.formData.dbCheck.push(db);
+                let rows = [this.formData.dbCheck[this.formData.dbCheck.length - 1]];
+                this.toggleParameterSelection(rows)
+            },
             changeAssertionType() {
                 if (this.radio === 'form-data') {
                     this.ParameterType = !this.ParameterType
