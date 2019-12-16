@@ -11,54 +11,50 @@
                     </el-col>
                     <el-col :span="3">
                         <el-form-item>
-                            <el-select v-model="formData.request4" placeholder="请求方式" @change="checkRequest" value="">
+                            <el-select size="small" v-model="formData.request4" placeholder="请求方式" @change="checkRequest" value="">
                                 <el-option v-for="(item,index) in request" :key="index+''" :label="item.label"
                                            :value="item.value"></el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
-                    <el-col :span='15'>
+                    <el-col :span='18'>
                         <el-form-item prop="addr">
                             <el-row :gutter="2">
-                                <el-col :span="22">
-                                    <el-input v-model.trim="formData.addr" placeholder="地址" auto-complete=""></el-input>
+                                <el-col :span="18">
+                                    <el-input size="small" v-model.trim="formData.addr" placeholder="地址" auto-complete=""></el-input>
                                 </el-col>
                                 <el-col :span="2">
-                                    <el-button class="el-icon-refresh-left" @click="Refresh"
+                                    <el-button size="small" class="el-icon-refresh-left" @click="Refresh"
                                                :disabled="disabled"></el-button>
+                                </el-col>
+                                <el-col :span="2">
+                                    <el-button size="small" type="primary" @click="fastTest('formData')" :loading="loadingSend">Send
+                                    </el-button>
+                                </el-col>
+                                <el-col :span="2">
+                                    <el-button size="small" :loading="loading" type="danger" @click="addInnerDialogVisible= true">Save
+                                    </el-button>
+                                    <el-dialog title="Save Request" center :visible.sync="addInnerDialogVisible"
+                                               append-to-body>
+                                        <el-form autoComplete="on" :model="formData" :rules="resetRules" ref="formData"
+                                                 class="lk-form" label-position="right" label-width="100px">
+                                            <el-form-item label="接口名称">
+                                                <el-input v-model="formData.testName"></el-input>
+                                            </el-form-item>
+                                            <el-form-item label="接口描述">
+                                                <el-input v-model="formData.desc"></el-input>
+                                            </el-form-item>
+                                            <el-form-item>
+                                                <el-button :loading="loading" type="primary"
+                                                           @click="submitForm('formData')">确 认
+                                                </el-button>
+                                                <el-button @click="addInnerDialogVisible = false">取 消</el-button>
+                                            </el-form-item>
+                                        </el-form>
+                                    </el-dialog>
                                 </el-col>
                             </el-row>
                         </el-form-item>
-                    </el-col>
-                    <el-col :span='3'>
-                        <el-row :gutter="2">
-                            <el-col :span="12">
-                                <el-button type="primary" @click="fastTest('formData')" :loading="loadingSend">Send
-                                </el-button>
-                            </el-col>
-                            <el-col :span="12">
-                                <el-button :loading="loading" type="danger" @click="addInnerDialogVisible= true">Save
-                                </el-button>
-                                <el-dialog title="Save Request" center :visible.sync="addInnerDialogVisible"
-                                           append-to-body>
-                                    <el-form autoComplete="on" :model="formData" :rules="resetRules" ref="formData"
-                                             class="lk-form" label-position="right" label-width="100px">
-                                        <el-form-item label="接口名称">
-                                            <el-input v-model="formData.testName"></el-input>
-                                        </el-form-item>
-                                        <el-form-item label="接口描述">
-                                            <el-input v-model="formData.desc"></el-input>
-                                        </el-form-item>
-                                        <el-form-item>
-                                            <el-button :loading="loading" type="primary"
-                                                       @click="submitForm('formData')">确 认
-                                            </el-button>
-                                            <el-button @click="addInnerDialogVisible = false">取 消</el-button>
-                                        </el-form-item>
-                                    </el-form>
-                                </el-dialog>
-                            </el-col>
-                        </el-row>
                     </el-col>
                 </el-row>
             </div>
@@ -73,7 +69,7 @@
                                 </el-table-column>
                                 <el-table-column prop="name" label="标签" min-width="20%">
                                     <template slot-scope="scope">
-                                        <el-select placeholder="head标签" filterable v-model="scope.row.name" value="">
+                                        <el-select size="small" placeholder="head标签" filterable v-model="scope.row.name" value="">
                                             <el-option v-for="(item,index) in header" :key="index+''"
                                                        :label="item.label"
                                                        :value="item.value"></el-option>
@@ -82,15 +78,15 @@
                                 </el-table-column>
                                 <el-table-column prop="value" label="内容" min-width="40%">
                                     <template slot-scope="scope">
-                                        <el-input v-model.trim="scope.row.value" :value="scope.row.value"
+                                        <el-input size="small" v-model.trim="scope.row.value" :value="scope.row.value"
                                                   placeholder="请输入内容"></el-input>
                                     </template>
                                 </el-table-column>
                                 <el-table-column label="操作" min-width="7%">
                                     <template slot-scope="scope">
-                                        <el-button class="el-icon-delete" @click="delHead(scope.$index)"
+                                        <el-button size="small" class="el-icon-delete" @click="delHead(scope.$index)"
                                                    type="text"></el-button>
-                                        <el-button v-if="scope.$index===(formData.head.length-1)" class="el-icon-plus"
+                                        <el-button size="small" v-if="scope.$index===(formData.head.length-1)" class="el-icon-plus"
                                                    @click="addHead" type="text"></el-button>
                                     </template>
                                 </el-table-column>
@@ -105,13 +101,13 @@
                             <div style="margin: 5px">
                                 <el-row :span="24">
                                     <el-col :span="4">
-                                        <el-radio v-model="radio" label="form-data">表单(form-data)</el-radio>
+                                        <el-radio size="mini" v-model="radio" label="form-data">表单(form-data)</el-radio>
                                     </el-col>
                                     <el-col :span="4">
-                                        <el-radio v-model="radio" label="raw" v-if="request3">源数据(raw)</el-radio>
+                                        <el-radio size="mini" v-model="radio" label="raw" v-if="request3">源数据(raw)</el-radio>
                                     </el-col>
                                     <el-col v-show="request3" :span="16">
-                                        <el-checkbox v-model="radioType" label="3" v-show="ParameterType">表单转源数据
+                                        <el-checkbox size="mini" v-model="radioType" label="3" v-show="ParameterType">表单转源数据
                                         </el-checkbox>
                                     </el-col>
                                 </el-row>
@@ -124,28 +120,28 @@
                                 </el-table-column>
                                 <el-table-column prop="name" label="参数名" min-width="20%">
                                     <template slot-scope="scope">
-                                        <el-input v-model.trim="scope.row.name" :value="scope.row.name"
+                                        <el-input size="small" v-model.trim="scope.row.name" :value="scope.row.name"
                                                   placeholder="请输入参数值"></el-input>
                                     </template>
                                 </el-table-column>
                                 <el-table-column prop="value" label="参数值" min-width="40%">
                                     <template slot-scope="scope">
-                                        <el-input v-model.trim="scope.row.value" :value="scope.row.value"
+                                        <el-input size="small" v-model.trim="scope.row.value" :value="scope.row.value"
                                                   placeholder="请输入参数值"></el-input>
                                     </template>
                                 </el-table-column>
                                 <el-table-column label="操作" min-width="7%">
                                     <template slot-scope="scope">
-                                        <el-button class="el-icon-delete" @click="delParameter(scope.$index)"
+                                        <el-button size="small" class="el-icon-delete" @click="delParameter(scope.$index)"
                                                    type="text"></el-button>
-                                        <el-button v-if="scope.$index===(formData.parameter.length-1)"
+                                        <el-button size="small"  v-if="scope.$index===(formData.parameter.length-1)"
                                                    class="el-icon-plus" @click="addParameter" type="text"></el-button>
                                     </template>
                                 </el-table-column>
                                 <el-table-column label="" min-width="18%"></el-table-column>
                             </el-table>
                             <template>
-                                <el-input :class="ParameterType? 'parameter-b': 'parameter-a'" type="textarea" :rows="5"
+                                <el-input size="small" :class="ParameterType? 'parameter-b': 'parameter-a'" type="textarea" :rows="5"
                                           placeholder="请输入内容" v-model.trim="formData.parameterRaw"></el-input>
                             </template>
                         </el-collapse-item>
@@ -154,8 +150,8 @@
                         <el-collapse-item name="3">
                             <span class="collapse-title" slot="title">响应结果</span>
                             <div style="margin-bottom: 10px">
-                                <el-button @click="showBody">Body</el-button>
-                                <el-button @click="showHeader">Head</el-button>
+                                <el-button size="small" @click="showBody">Body</el-button>
+                                <el-button size="small" @click="showHeader">Head</el-button>
                                 <div :class="formatJson? 'parameter-b': 'code-a'">
                                     Status: <span :class="formData.statusCode===200? 'green': 'red'" class="resultMsg">{{formData.statusCode}}</span>
                                     Times: <span class="resultMsg; green">{{formData.resultTimes}}s</span>

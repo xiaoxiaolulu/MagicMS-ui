@@ -1,5 +1,5 @@
 <template>
-    <el-select v-model="currentValue" v-loading="loading" element-loading-spinner="el-icon-loading" clearable filterable  placeholder="选择项目">
+    <el-select size="small" v-model="currentValue" v-loading="loading" element-loading-spinner="el-icon-loading" clearable filterable  placeholder="选择项目">
         <template v-if="roles">
             <el-option v-for="item in roles" :key="item.id" :label="item.name" :value="item.id">
                 {{ item.name }}
