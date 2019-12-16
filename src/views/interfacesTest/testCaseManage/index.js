@@ -1,1 +1,1 @@
-module.exports = require('./interfacesManage.vue');
+module.exports = require('./testCaseManage.vue');

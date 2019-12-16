@@ -11,14 +11,6 @@ export const registUser = params => { return axios.post(`${host}/register/`, par
 // 登录
 export const loginUser = params => { return axios.post(`${host}/login/`, params) };
 
-// 获取小组
-export const getCommunityGroups = params => { return axios.get(`${host}/groups/`, params) };
-
-// 创建小组
-export const createCommunityGroup = params => {
-    return axios.post(`${host}/groups/`, params, { headers: { 'Content-Type': 'multipart/form-data' } })
-};
-
 // 获取项目列表
 export const getProjectList = params => {return axios.get(`${host}/projects/`, params)};
 
@@ -84,3 +76,6 @@ export const updateApi = params => {return axios.patch(`${host}/interfaces/${par
 
 // 删除接口
 export const deleteApi = params => { return axios.delete(`${host}/interfaces/${params.interface_id}/`)};
+
+// 获取接口列表
+export const getCaseList = params => {return axios.get(`${host}/cases/`, params)};

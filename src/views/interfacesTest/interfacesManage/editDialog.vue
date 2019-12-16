@@ -101,13 +101,13 @@
                             <div style="margin: 5px">
                                 <el-row :span="24">
                                     <el-col :span="4">
-                                        <el-radio size="mini" v-model="radio" label="form-data">表单(form-data)</el-radio>
+                                        <el-radio size="mini" v-model="radio" label="form-data">form-data</el-radio>
                                     </el-col>
                                     <el-col :span="4">
-                                        <el-radio size="mini" v-model="radio" label="raw" v-if="request3">源数据(raw)</el-radio>
+                                        <el-radio size="mini" v-model="radio" label="raw" v-if="request3">raw</el-radio>
                                     </el-col>
                                     <el-col v-show="request3" :span="16">
-                                        <el-checkbox size="mini" v-model="radioType" label="3" v-show="ParameterType">表单转源数据
+                                        <el-checkbox size="mini" v-model="radioType" label="3" v-show="ParameterType">to-json
                                         </el-checkbox>
                                     </el-col>
                                 </el-row>
