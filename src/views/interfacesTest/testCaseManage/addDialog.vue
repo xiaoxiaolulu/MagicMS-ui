@@ -144,8 +144,8 @@
                                     </el-table-column>
                                     <el-table-column prop="db" label="db-setting" min-width="20%">
                                         <template slot-scope="scope">
-                                            <api-select size="small" v-model.trim="scope.row.db" :value="scope.row.db" data-vv-as="数据库">
-                                            </api-select>
+                                            <db-select size="small" v-model.trim="scope.row.db" :value="scope.row.db" data-vv-as="数据库">
+                                            </db-select>
                                         </template>
                                     </el-table-column>
                                     <el-table-column prop="name" label="key" min-width="20%">
@@ -192,7 +192,7 @@
 </template>
 
 <script>
-    import {apiDebug, createApi} from "../../../api/api";
+    import {createCase} from "../../../api/api";
     import apiSelect from '@/components/roleSelectApi'
     import dbSelect from '@/components/roleSelectDb'
 
@@ -452,62 +452,59 @@
             },
             submitForm (formName){
 
-                // 请求路由
-                let _route = this.formData.addr.indexOf('?') === -1 ? this.formData.addr : this.formData.addr.split('?')[0];
-
-                // 请求头部
-                let headers = {};
-                for (let i = 0; i < this.formData.head.length; i++) {
-                    var a = this.formData.head[i]["name"];
-                    if (a) {
-                        headers[a] = this.formData.head[i]["value"]
-                    }
+                // 断言参数
+                let _assertionContents = [];
+                let assertionContent = this.formData.assertion;
+                for (let i = 0; i < assertionContent.length; i++) {
+                    var assertionKey = assertionContent[i]['name'];
+                    var assertionCom = assertionContent[i]['comparetor'];
+                    var assertionVal = assertionContent[i]['value'];
+                    _assertionContents.push(
+                        {
+                            "name": assertionKey,
+                            "comparetor": assertionCom,
+                            "value": assertionVal
+                        }
+                    );
                 }
 
-                headers = JSON.stringify(headers)
-
-                // 请求参数
-                let _type = this.radio;
-                let _parameter = this.formData.request4 === 'get' ? "" : {};
-
-                if (this.formData.request4 === 'get') {
-                    let arrParams = [];
-                    for (let i = 0; i < this.formData.parameter.length; i++) {
-                        try {
-                            var a = this.formData.parameter[i]['name'];
-                            var b = this.formData.parameter[i]['value'];
-                            arrParams.push(a + '=' + b);
-                        } catch (e) {
-                            console.log(e)
-                        }
-                    }
-                    var getParams = (arrParams).join("&");
-                    _parameter += getParams;
-
-                } else {
-                    for (let i = 0; i < this.formData.parameter.length; i++) {
-                        var a = this.formData.parameter[i]["name"];
-                        if (a) {
-                            _parameter[a] = this.formData.parameter[i]["value"];
-                        }
-                    }
-                    _parameter = JSON.stringify(_parameter);
+                // 接口配置
+                let _apiSet = [];
+                let apiSetting = this.formData.api;
+                for (let i = 0; i <apiSetting.length ; i++) {
+                    var apiIndex = apiSetting[i]['name'];
+                    var apipriority = apiSetting[i]['priority'];
+                    var apiSetUp = apiSetting[i]['setUp'];
+                    _apiSet.push(apiIndex);
                 }
 
-                // 接口名称判断
-                let testName = this.formData.testName === "" ? _route: this.formData.testName;
+                // 落库校验
+                let _checkDbSet = [];
+                let dbCheck = this.formData.dbCheck;
+                for (let i = 0; i < dbCheck ; i++) {
+                    var dbIndex = dbCheck[i]['db'];
+                    var assertSqlKey = dbCheck[i]['name'];
+                    var assertSqlCom = dbCheck[i]['comparetor'];
+                    var assertSqlVal = dbCheck[i]['value'];
+                    _checkDbSet.push(
+                        {
+                            "db": dbIndex,
+                            "assertSql": {
+                                "assertKey": assertSqlKey,
+                                "assertCom": assertSqlCom,
+                                "assertVal": assertSqlVal
+                            }
+                        }
+                    )
+                }
 
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        console.log("测试")
-                        console.log(JSON.stringify(headers))
-                        createApi({
-                            url: _route,
-                            interface_name: testName,
-                            method: this.formData.request4,
-                            headers: headers,
-                            params: _parameter,
-                            project: this.formData.id,
+                        createCase({
+                            test_name: this.formData.testName,
+                            assertion: _assertionContents,
+                            interfaces: _apiSet,
+                            db_check: _checkDbSet,
                             desc: this.formData.desc
                         }).then((response) => {
                             console.log(response.data);

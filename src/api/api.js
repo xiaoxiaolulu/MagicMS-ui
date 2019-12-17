@@ -77,5 +77,14 @@ export const updateApi = params => {return axios.patch(`${host}/interfaces/${par
 // 删除接口
 export const deleteApi = params => { return axios.delete(`${host}/interfaces/${params.interface_id}/`)};
 
-// 获取接口列表
+// 获取用例列表
 export const getCaseList = params => {return axios.get(`${host}/cases/`, params)};
+
+// 添加用例
+export const createCase = params => {return axios.post(`${host}/cases/`, params)};
+
+// 编辑用例
+export const updateCase = params => {return axios.patch(`${host}/cases/${params.interface_id}/`, params)};
+
+// 删除用例
+export const deleteCase = params => { return axios.delete(`${host}/cases/${params.interface_id}/`)};
