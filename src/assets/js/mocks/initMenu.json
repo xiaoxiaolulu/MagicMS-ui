@@ -57,15 +57,29 @@
           {
             "disabled": false,
             "menuId": 201,
+            "menuName": "公共参数",
+            "menuPath": "publicParamsManage",
+            "parentMenuId": 200
+          },
+          {
+            "disabled": false,
+            "menuId": 202,
             "menuName": "接口配置",
             "menuPath": "interfacesManage",
             "parentMenuId": 200
           },
           {
             "disabled": false,
-            "menuId": 202,
+            "menuId": 203,
             "menuName": "测试用例",
             "menuPath": "testCaseManage",
+            "parentMenuId": 200
+          },
+          {
+            "disabled": false,
+            "menuId": 204,
+            "menuName": "测试套件",
+            "menuPath": "testSuitManage",
             "parentMenuId": 200
           }
         ],
