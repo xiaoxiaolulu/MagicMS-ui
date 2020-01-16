@@ -481,7 +481,7 @@
                 // 落库校验
                 let _checkDbSet = [];
                 let dbCheck = this.formData.dbCheck;
-                for (let i = 0; i < dbCheck ; i++) {
+                for (let i = 0; i < dbCheck.length ; i++) {
                     var dbIndex = dbCheck[i]['db'];
                     var assertSqlKey = dbCheck[i]['name'];
                     var assertSqlCom = dbCheck[i]['comparetor'];

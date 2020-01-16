@@ -1,5 +1,5 @@
 <template>
-    <el-dialog title="Collections" :visible.sync="addDialogVisible" center class="abow_dialog">
+    <el-dialog title="Collections" :visible.sync="editDialogVisible" center class="abow_dialog">
         <el-form autoComplete="on" :model="formData" :rules="resetRules" ref="formData">
             <div style="border: 1px solid #e6e6e6;margin-bottom: 10px;padding:15px;padding-bottom: 0px">
                 <el-row :gutter="20">
@@ -136,53 +136,51 @@
                                 </el-table-column>
                                 <el-table-column label="" min-width="18%"></el-table-column>
                             </el-table>
-                            <template>
-                                <el-table ref="multipleParameterTable" :data="formData.dbCheck" highlight-current-row
-                                          :class="ParameterType? 'parameter-b': 'parameter-a'"
-                                          @selection-change="selsChangeDb" border :header-cell-style="{background:'#eef1f6',color:'#606266'}">
-                                    <el-table-column type="selection" min-width="5%" label="头部">
-                                    </el-table-column>
-                                    <el-table-column prop="db" label="db-setting" min-width="20%">
-                                        <template slot-scope="scope">
-                                            <api-select size="small" v-model.trim="scope.row.db" :value="scope.row.db" data-vv-as="数据库">
-                                            </api-select>
-                                        </template>
-                                    </el-table-column>
-                                    <el-table-column prop="name" label="key" min-width="20%">
-                                        <template slot-scope="scope">
-                                            <el-input size="small" v-model.trim="scope.row.name" :value="scope.row.name"
-                                                      placeholder="请输入断言的键"></el-input>
-                                        </template>
-                                    </el-table-column>
-                                    <el-table-column prop="comparetor" label="comparetor" min-width="20%">
-                                        <template slot-scope="scope">
-                                            <el-select size="small" placeholder="请选择校验器" filterable v-model.trim="scope.row.comparetor" :value="scope.row.comparetor">
-                                                <!--                                            EQU - 等于-->
-                                                <!--                                            NEQ - 不等于-->
-                                                <!--                                            LSS - 小于-->
-                                                <!--                                            LEQ - 小于或等于-->
-                                                <!--                                            GTR - 大于-->
-                                                <!--                                            GEQ - 大于或等于-->
-                                                <el-option v-for="(item,index) in comparetor" :key="index+''" :label="item.label"
-                                                           :value="item.value"></el-option>
-                                            </el-select>
-                                        </template>
-                                    </el-table-column>
-                                    <el-table-column prop="value" label="value" min-width="40%">
-                                        <template slot-scope="scope">
-                                            <el-input  size="small" v-model.trim="scope.row.value" :value="scope.row.value"
-                                                       placeholder="请输入断言的值"></el-input>
-                                        </template>
-                                    </el-table-column>
-                                    <el-table-column label="操作" min-width="7%">
-                                        <template slot-scope="scope">
-                                            <el-button size="small" class="el-icon-delete" @click="delDb(scope.$index)" type="text"></el-button>
-                                            <el-button size="small"  v-if="scope.$index===(formData.dbCheck.length-1)" class="el-icon-plus" @click="addDb" type="text"></el-button>
-                                        </template>
-                                    </el-table-column>
-                                    <el-table-column label="" min-width="18%"></el-table-column>
-                                </el-table>
-                            </template>
+                            <el-table ref="multipleParameterTable" :data="formData.dbCheck" highlight-current-row
+                                      :class="ParameterType? 'parameter-b': 'parameter-a'"
+                                      @selection-change="selsChangeDb" border :header-cell-style="{background:'#eef1f6',color:'#606266'}">
+                                <el-table-column type="selection" min-width="5%" label="头部">
+                                </el-table-column>
+                                <el-table-column prop="id" label="db-setting" min-width="20%">
+                                    <template slot-scope="scope">
+                                        <db-select size="small" v-model.trim="scope.row.id" :value="scope.row.id" data-vv-as="数据库">
+                                        </db-select>
+                                    </template>
+                                </el-table-column>
+                                <el-table-column prop="assertKey" label="assertKey" min-width="20%">
+                                    <template slot-scope="scope">
+                                        <el-input size="small" v-model.trim="scope.row.assertKey" :value="scope.row.assertKey"
+                                                  placeholder="请输入断言的键"></el-input>
+                                    </template>
+                                </el-table-column>
+                                <el-table-column prop="assertCom" label="assertCom" min-width="20%">
+                                    <template slot-scope="scope">
+                                        <el-select size="small" placeholder="请选择校验器" filterable v-model.trim="scope.row.assertCom" :value="scope.row.assertCom">
+                                            <!--                                            EQU - 等于-->
+                                            <!--                                            NEQ - 不等于-->
+                                            <!--                                            LSS - 小于-->
+                                            <!--                                            LEQ - 小于或等于-->
+                                            <!--                                            GTR - 大于-->
+                                            <!--                                            GEQ - 大于或等于-->
+                                            <el-option v-for="(item,index) in comparetor" :key="index+''" :label="item.label"
+                                                       :value="item.value"></el-option>
+                                        </el-select>
+                                    </template>
+                                </el-table-column>
+                                <el-table-column prop="assertVal" label="ssertVal" min-width="40%">
+                                    <template slot-scope="scope">
+                                        <el-input  size="small" v-model.trim="scope.row.assertVal" :value="scope.row.assertVal"
+                                                   placeholder="请输入断言的值"></el-input>
+                                    </template>
+                                </el-table-column>
+                                <el-table-column label="操作" min-width="7%">
+                                    <template slot-scope="scope">
+                                        <el-button size="small" class="el-icon-delete" @click="delDb(scope.$index)" type="text"></el-button>
+                                        <el-button size="small"  v-if="scope.$index===(formData.dbCheck.length-1)" class="el-icon-plus" @click="addDb" type="text"></el-button>
+                                    </template>
+                                </el-table-column>
+                                <el-table-column label="" min-width="18%"></el-table-column>
+                            </el-table>
                         </el-collapse-item>
                     </div>
                 </el-collapse>
@@ -192,7 +190,7 @@
 </template>
 
 <script>
-    import {apiDebug, createApi} from "../../../api/api";
+    import {createCase} from "../../../api/api";
     import apiSelect from '@/components/roleSelectApi'
     import dbSelect from '@/components/roleSelectDb'
 
@@ -230,16 +228,14 @@
                 formData: {
                     testName: "",
                     desc: "",
-                    request4: 'POST',
-                    addr: '',
                     api: [{name: "", priority: "", setUp:""}],
                     assertion: [{name: "", comparetor: "", value: ""}],
-                    dbCheck: [{db: "", name: "", comparetor: "", value: ""}],
+                    dbCheck: [{id: "", assertKey: "", assertCom: "", assertVal: ""}],
                 },
                 resetRules: {},
                 loading: false,
                 title: '',
-                addDialogVisible: false,
+                editDialogVisible: false,
                 activeName: 'second',
                 disabled: false,
                 resultShow: true,
@@ -257,11 +253,62 @@
 
         watch: {
             value(val) {
-                this.addDialogVisible = val;
+                this.editDialogVisible = val;
                 this.errors.clear();
-                // this.formData = {...this.dialogData}
+
+                let testIndex = this.$parent.rowData.id;
+                let response = this.$parent.otherData;
+
+                let dbContent = [];
+                let apiSet = [];
+
+                for (let i = 0; i < response.length ; i++) {
+                    if(response[i]['id'] === testIndex){
+
+
+                        // 落库校验数据
+                        let dbAssert = response[i]['db_check'];
+                        for ( i = 0; i < dbAssert.length ; i++) {
+                            var dbIndex = dbAssert[i]['db'];
+                            var check_val = dbAssert[i]['assertSql']
+
+                            // var name = dbAssert[i]['assertSql']['assertKey'];
+                            // var com = dbAssert[i]['assertSql']['assertCom'];
+                            // var value = dbAssert[i]['assertSql']['assertVal'];
+                            // console.log(dbIndex + ":" + name + com + value)
+                            // console.log("测试")
+                            // console.log(dbAssert[i]['assertSql'])
+                            // console.log("测试")
+                            console.log(dbAssert[i])
+                            dbContent.push(
+                                Object.assign({}, {id: dbIndex}, JSON.stringify(check_val))
+                            )
+                        }
+
+                        // 接口数据
+                        // let apiSetting = response[i]['api'];
+                        // for (let i = 0; i < apiSetting.length ; i++) {
+                        //     var apiIndex = apiSetting[i]['interfaces']['id'];
+                        //     apiSet.push(
+                        //         {
+                        //             name: apiIndex,
+                        //             priority: "",
+                        //             setUp:""}
+                        //     )
+                        // }
+                    }
+                }
+
+                this.formData = {
+                    testName: this.$parent.rowData.test_name,
+                    assertion: eval(this.$parent.rowData.assertion),
+                    dbCheck: dbContent,
+                    desc: this.$parent.rowData.desc,
+                    // api: apiSet
+                }
             },
-            addDialogVisible(val) {
+
+            editDialogVisible(val) {
                 this.$emit('input', val)
             },
 
@@ -337,7 +384,7 @@
             },
 
             addDb() {
-                let db = {db:"", name: "", comparetor: "", value: ""};
+                let db = {db:"", assertKey: "", assertCom: "", assertVal: ""};
                 this.formData.dbCheck.push(db);
                 let rows = [this.formData.dbCheck[this.formData.dbCheck.length - 1]];
                 this.toggleParameterSelection(rows)
@@ -452,66 +499,66 @@
             },
             submitForm (formName){
 
-                // 请求路由
-                let _route = this.formData.addr.indexOf('?') === -1 ? this.formData.addr : this.formData.addr.split('?')[0];
-
-                // 请求头部
-                let headers = {};
-                for (let i = 0; i < this.formData.head.length; i++) {
-                    var a = this.formData.head[i]["name"];
-                    if (a) {
-                        headers[a] = this.formData.head[i]["value"]
-                    }
+                // 断言参数
+                let _assertionContents = [];
+                let assertionContent = this.formData.assertion;
+                for (let i = 0; i < assertionContent.length; i++) {
+                    var assertionKey = assertionContent[i]['name'];
+                    var assertionCom = assertionContent[i]['comparetor'];
+                    var assertionVal = assertionContent[i]['value'];
+                    _assertionContents.push(
+                        {
+                            "name": assertionKey,
+                            "comparetor": assertionCom,
+                            "value": assertionVal
+                        }
+                    );
                 }
 
-                headers = JSON.stringify(headers)
-
-                // 请求参数
-                let _type = this.radio;
-                let _parameter = this.formData.request4 === 'get' ? "" : {};
-
-                if (this.formData.request4 === 'get') {
-                    let arrParams = [];
-                    for (let i = 0; i < this.formData.parameter.length; i++) {
-                        try {
-                            var a = this.formData.parameter[i]['name'];
-                            var b = this.formData.parameter[i]['value'];
-                            arrParams.push(a + '=' + b);
-                        } catch (e) {
-                            console.log(e)
-                        }
-                    }
-                    var getParams = (arrParams).join("&");
-                    _parameter += getParams;
-
-                } else {
-                    for (let i = 0; i < this.formData.parameter.length; i++) {
-                        var a = this.formData.parameter[i]["name"];
-                        if (a) {
-                            _parameter[a] = this.formData.parameter[i]["value"];
-                        }
-                    }
-                    _parameter = JSON.stringify(_parameter);
+                // 接口配置
+                let _apiSet = [];
+                let apiSetting = this.formData.api;
+                for (let i = 0; i <apiSetting.length ; i++) {
+                    var apiIndex = apiSetting[i]['name'];
+                    var apipriority = apiSetting[i]['priority'];
+                    var apiSetUp = apiSetting[i]['setUp'];
+                    _apiSet.push(apiIndex);
                 }
 
-                // 接口名称判断
-                let testName = this.formData.testName === "" ? _route: this.formData.testName;
+                // 落库校验
+                let _checkDbSet = [];
+                let dbCheck = this.formData.dbCheck;
+                for (let i = 0; i < dbCheck.length ; i++) {
+                    var dbIndex = dbCheck[i]['id'];
+                    var assertSqlKey = dbCheck[i]['assertKey'];
+                    var assertSqlCom = dbCheck[i]['assertCom'];
+                    var assertSqlVal = dbCheck[i]['assertVal'];
+
+                    _checkDbSet.push(
+                        {
+                            "db": dbIndex,
+                            "assertSql": {
+                                "assertKey": assertSqlKey,
+                                "assertCom": assertSqlCom,
+                                "assertVal": assertSqlVal
+                            }
+                        }
+                    );
+                    _checkDbSet.push(dbIndex)
+                }
 
                 this.$refs[formName].validate((valid) => {
+
                     if (valid) {
-                        console.log("测试")
-                        console.log(JSON.stringify(headers))
-                        createApi({
-                            url: _route,
-                            interface_name: testName,
-                            method: this.formData.request4,
-                            headers: headers,
-                            params: _parameter,
-                            project: this.formData.id,
+                        createCase({
+                            test_name: this.formData.testName,
+                            assertion: _assertionContents,
+                            interfaces: _apiSet,
+                            db_check: _checkDbSet,
                             desc: this.formData.desc
                         }).then((response) => {
                             console.log(response.data);
-                            this.addDialogVisible = false;
+                            this.editDialogVisible = false;
                             this.addInnerDialogVisible = false
                             this.$parent.queryList()
                         }).catch((err) => {

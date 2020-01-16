@@ -87,7 +87,26 @@
         "menuIcon": "el-icon-printer",
         "menuId": 200,
         "menuName": "接口测试",
-        "menuPath": "z",
+        "menuPath": "b",
+        "menuRemark": "",
+        "parentMenuId": 0
+      },
+      {
+
+        "children": [
+          {
+            "disabled": false,
+            "menuId": 301,
+            "menuName": "页面元素",
+            "menuPath": "pageElementManage",
+            "parentMenuId": 200
+          }
+        ],
+        "disabled": false,
+        "menuIcon": "el-icon-printer",
+        "menuId": 300,
+        "menuName": "web测试",
+        "menuPath": "c",
         "menuRemark": "",
         "parentMenuId": 0
       }

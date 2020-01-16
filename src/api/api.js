@@ -84,7 +84,16 @@ export const getCaseList = params => {return axios.get(`${host}/cases/`, params)
 export const createCase = params => {return axios.post(`${host}/cases/`, params)};
 
 // 编辑用例
-export const updateCase = params => {return axios.patch(`${host}/cases/${params.interface_id}/`, params)};
+export const updateCase = params => {return axios.patch(`${host}/cases/${params.case_id}/`, params)};
 
 // 删除用例
-export const deleteCase = params => { return axios.delete(`${host}/cases/${params.interface_id}/`)};
+export const deleteCase = params => { return axios.delete(`${host}/cases/${params.case_id}/`)};
+
+// 获取关键字列表
+export const getKeywordsList = params => {return axios.get(`${host}/get_keywords/`, params)};
+
+// 添加页面元素
+export const createPageElement = params => {return axios.post(`${host}/page_element/`, params)};
+
+// 获取页面元素列表
+// export const getPageElementList = p

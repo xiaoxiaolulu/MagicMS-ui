@@ -2,8 +2,11 @@
     <div>
         <div class="lk-toolbar">
             <el-form :inline="true" :model="queryParams" ref="queryParams">
-                <el-form-item label="用例名称"  prop="name">
-                    <el-input size="small" clearable type="name" v-model.trim="queryParams.name" placeholder="接口名称"></el-input>
+                <el-form-item label="元素名称"  prop="name">
+                    <el-input size="small" clearable type="name" v-model.trim="queryParams.name" placeholder="元素名称"></el-input>
+                </el-form-item>
+                <el-form-item label="所属页面" prop="page">
+                    <el-input size="small" clearable type="page" v-model.trim="queryParams.page" placeholder="所属页面"></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button size="small" type="primary" icon="el-icon-search" @click="queryList"></el-button>
@@ -22,16 +25,17 @@
                 element-loading-text="拼命加载中"
                 height="100%"
                 border>
-            <el-table-column type="index" prop="id" width="50" label="序号"></el-table-column>
-            <el-table-column prop="test_name" min-width="150" label="用例名称"></el-table-column>
-            <el-table-column prop="desc" min-width="150" label="用例描述"></el-table-column>
-            <el-table-column prop="assertion" min-width="150" label="断言数据"></el-table-column>
+            <el-table-column type="index" width="50" label="序号"></el-table-column>
+            <el-table-column prop="element_name" min-width="150" label="元素名称"></el-table-column>
+            <el-table-column prop="operate_type" min-width="150" label="操作类型"></el-table-column>
+            <el-table-column prop="owner_page" min-width="150" label="所属页面"></el-table-column>
+            <el-table-column prop="desc" min-width="150" label="元素描述"></el-table-column>
             <el-table-column prop="creator.nick_name" min-width="150" label="创建人"></el-table-column>
             <el-table-column prop="add_time" min-width="150" label="创建时间"></el-table-column>
             <el-table-column label="操作" min-width="150">
                 <template slot-scope="scope">
                     <el-button @click="editMenu(scope.row)" type="text">编辑</el-button>
-                    <el-button @click="deleteCaseData(scope.row)" type="text">删除</el-button>
+                    <el-button @click="deleteProjectData(scope.row)" type="text">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -50,7 +54,7 @@
 <script>
     import addDialog from './addDialog'
     import editDialog from "./editDialog";
-    import {getCaseList,  deleteCase} from "../../../api/api";
+    import {getDbSettingList, deleteDbSetting} from "../../../api/api";
 
 
     export default {
@@ -58,6 +62,7 @@
             return {
                 queryParams: {
                     name: null,
+                    page: null,
                     currentPage: 1
                 },
                 name: null,
@@ -66,10 +71,16 @@
                 menuData: null,
                 tableData: null,
                 rowData: null,
-                otherData: null,
                 total: null,
                 tableLoading: false,
-                dbList: []
+                dbList: [],
+                loading: false,
+                type: [
+                    'MySQL', 'MariaDB', 'Percona Server', 'PostgreSQL', 'Microsoft Access',
+                    'Microsoft SQL Server', 'Google Fusion Tables', 'FileMaker', 'Oracle', 'Sybase',
+                    'dBASE', 'Clipper', 'FoxPro', 'foshub', 'BigTable', 'Cassandra', 'MongoDB', 'CouchDB',
+                    'Apache Cassandra'
+                ]
             }
         },
         components: {
@@ -79,23 +90,31 @@
         created() {
             this.queryList()
         },
-        methods: {
-            resetForm(formName) {
-                this.$refs[formName].resetFields();
-                this.queryList();
+        watch: {
+            value: function (val) {
+                this.currentValue = val
             },
+            currentValue: function (val) {
+                this.$emit('input', val)
+            }
+        },
+        methods: {
             queryList() {
                 this.tableLoading = true;
-                getCaseList({ params: this.queryParams }).then((response) => {
+                getDbSettingList({ params: this.queryParams}).then((response) => {
                     this.tableLoading = false;
                     console.log(response.data.data);
                     this.tableData = response.data.data;
-                    this.otherData = response.data.data
                     this.total = response.data.data.length;
                 }).catch((error) => {
                     console.log(error.response.data)
                 })
             },
+            resetForm(formName) {
+                this.$refs[formName].resetFields();
+                this.queryList();
+            },
+
             editMenu(row) {
                 this.rowData = row;
                 this.editDialogVisible = true
@@ -105,9 +124,9 @@
                 this.menuData.editable = editable;
                 this.addDialogVisible = true;
             },
-            deleteCaseData(row){
+            deleteProjectData(row){
                 this.$confirm(`确认删除${row.id}?`).then(_ => {
-                    deleteCase({case_id: row.id}).then((response) => {
+                    deleteDbSetting({db_id: row.id}).then((response) => {
                         console.log(response.data.code);
                         console.log(response.data.msg);
                         if(response.data.code === 1){

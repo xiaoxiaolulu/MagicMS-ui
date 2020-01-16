@@ -80,6 +80,14 @@ const routes = [
         preTitle: '用例管理',
         title: '接口管理'
       }
+    },{
+      path: '/pageElementManage',
+      name: 'pageElementManage',
+      component: resolve => require(['@/views/webUiTest/pageElementManage'], resolve),
+      meta: {
+        preTitle: '页面元素',
+        title: 'web测试'
+      }
     },
       {
       path: '/DataConstruction',
