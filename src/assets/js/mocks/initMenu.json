@@ -79,7 +79,7 @@
             "disabled": false,
             "menuId": 204,
             "menuName": "测试套件",
-            "menuPath": "testSuitManage",
+            "menuPath": "testSuiteManage",
             "parentMenuId": 200
           }
         ],

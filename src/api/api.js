@@ -89,6 +89,18 @@ export const updateCase = params => {return axios.patch(`${host}/cases/${params.
 // 删除用例
 export const deleteCase = params => { return axios.delete(`${host}/cases/${params.case_id}/`)};
 
+// 获取套件列表
+export const getSuiteList = params => {return axios.get(`${host}/suites/`, params)};
+
+// 添加测试套件
+export const createSuite = params => {return axios.post(`${host}/suites/`, params)};
+
+// 编辑测试套件
+export const updateSuite = params => {return axios.patch(`${host}/suites/${params.suite_id}/`, params)};
+
+// 删除测试套件
+export const deleteSuite = params => { return axios.delete(`${host}/suites/ ${params.suite_id}/`)};
+
 // 获取关键字列表
 export const getKeywordsList = params => {return axios.get(`${host}/get_keywords/`, params)};
 
