@@ -99,7 +99,7 @@ export const createSuite = params => {return axios.post(`${host}/suites/`, param
 export const updateSuite = params => {return axios.patch(`${host}/suites/${params.suite_id}/`, params)};
 
 // 删除测试套件
-export const deleteSuite = params => { return axios.delete(`${host}/suites/ ${params.suite_id}/`)};
+export const deleteSuite = params => { return axios.delete(`${host}/suites/${params.suite_id}/`)};
 
 // 获取关键字列表
 export const getKeywordsList = params => {return axios.get(`${host}/get_keywords/`, params)};
